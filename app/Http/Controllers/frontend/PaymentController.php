@@ -237,34 +237,33 @@ class PaymentController extends Controller
         $arr[0]['id'] = $request['q1'];
         $arr[0]['question'] = getQuestionName($request['q1']);
         $arr[0]['ans'] = $request['a1'];
-
         $arr[1]['id'] = $request['q2'];
         $arr[1]['question'] = getQuestionName($request['q2']);
         $arr[1]['ans'] = $request['a2'];
-
         $arr[2]['id'] = $request['q3'];
         $arr[2]['question'] = getQuestionName($request['q3']);
         $arr[2]['ans'] = $request['a3'];
-
         $arr[3]['id'] = $request['q4'];
         $arr[3]['question'] = getQuestionName($request['q4']);
         $arr[3]['ans'] = $request['a4'];
-
         $arr[4]['id'] = $request['q5'];
         $arr[4]['question'] = getQuestionName($request['q5']);
         $arr[4]['ans'] = $request['a5'];
-
         $arr[5]['id'] = $request['q6'];
         $arr[5]['question'] = getQuestionName($request['q6']);
         $arr[5]['ans'] = $request['a6'];
-
         $arr[6]['id'] = $request['q7'];
         $arr[6]['question'] = getQuestionName($request['q7']);
         $arr[6]['ans'] = $request['a7'];
-
         $arr[7]['id'] = $request['q8'];
         $arr[7]['question'] = getQuestionName($request['q8']);
         $arr[7]['ans'] = $request['a8'];
+        $arr[8]['id'] = $request['q9'];
+        $arr[8]['question'] = getQuestionName($request['q9']);
+        $arr[8]['ans'] = $request['a9'];
+        $arr[9]['id'] = $request['q10'];
+        $arr[9]['question'] = getQuestionName($request['q10']);
+        $arr[9]['ans'] = $request['a10'];
 
         if (!blank($arr)) {
             foreach ($arr as $val) {
