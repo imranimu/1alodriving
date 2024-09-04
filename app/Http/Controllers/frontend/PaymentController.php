@@ -266,14 +266,6 @@ class PaymentController extends Controller
         $arr[7]['question'] = getQuestionName($request['q8']);
         $arr[7]['ans'] = $request['a8'];
 
-        $arr[8]['id'] = $request['q9'];
-        $arr[8]['question'] = getQuestionName($request['q9']);
-        $arr[8]['ans'] = $request['a9'];
-
-        $arr[9]['id'] = $request['q10'];
-        $arr[9]['question'] = getQuestionName($request['q10']);
-        $arr[9]['ans'] = $request['a10'];
-
         if (!blank($arr)) {
             foreach ($arr as $val) {
                 UserQuestion::create([
