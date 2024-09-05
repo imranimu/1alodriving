@@ -21,7 +21,7 @@
     <div class="page-content">
         <div class="page-header position-relative clearfix">
             <div class="span10 header-title">
-                <h1>Student Report</h1>
+                <h1>Student Report##</h1>
             </div>
         </div>
         <!--/.page-header-->
@@ -52,7 +52,7 @@
                         <th scope="col">Student Name</th>
                         <th scope="col">Student email</th>
                         <th scope="col">Courses Name</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Action###</th>
                     </tr>
                 </thead>
 
@@ -66,6 +66,8 @@
                                 <td>{{ isset($val->get_user) ? $val->get_user->email : '' }}</td>
                                 <td>{{ isset($val->get_course) ? $val->get_course->title : '' }}</td>
                                 <td>
+                                    <a href="{{ url('/admin/report/' . $val->course_id . '/' . $val->student_id . '/view') }}"
+                                        class="btn btn-primary ">View</a>
                                     <a href="{{ url('/admin/report/' . $val->course_id . '/' . $val->student_id . '/download') }}"
                                         class="btn btn-primary ">Download</a>
                                 </td>

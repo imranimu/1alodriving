@@ -66,6 +66,8 @@
                                                 <td>{{ isset($val->get_user) ? $val->get_user->email : '' }}</td>
                                                 <td>{{ isset($val->get_course) ? $val->get_course->title : '' }}</td>
                                                 <td>
+                                                    <a href="{{ url('/admin/report/' . $val->course_id . '/' . $val->student_id . '/view') }}"
+                                                        class="btn btn-info "><i class="fa fa-eye"></i> View</a>
                                                     <a href="{{ url('/admin/report/' . $val->course_id . '/' . $val->student_id . '/download') }}"
                                                         class="btn btn-primary ">Download</a>
                                                 </td>

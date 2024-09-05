@@ -157,7 +157,7 @@ class ProfileController extends Controller
         endif;
         return redirect()->back();
     }
-	
+
 	public function report(Request $request)
     {
         $sql = CoursePurchase::selectRaw('course_purchases.id, course_purchases.student_id, course_purchases.course_id, course_purchases.total_amount, course_purchases.grand_amount, course_purchases.transaction_id, course_purchases.payment_status, course_purchases.total_module, course_purchases.status, course_purchases.stripe_response, course_purchases.created_at, courses.title, courses.image, courses_modules.id as module_id')->where(['course_purchases.payment_status' => '1', 'course_purchases.status' => '1'])
@@ -191,4 +191,37 @@ class ProfileController extends Controller
         $pdf = PDF::loadView('admin.report.report_download', $data);
         return $pdf->download('pdfview.pdf');
     }
+
+    public function report_view($course_id, $student_id)
+    {
+        $data = [];
+        $getCoursePurchase = CoursePurchase::where(['course_id' => $course_id, 'student_id' => $student_id])->first();
+        $getCourseModule = CoursesModule::where(['courses_id' => $course_id, 'status' => '1'])->get();
+        $getLicense = CourseCertificate::where(['course_id' => $course_id, 'status' => '1'])->with('get_license')->first();
+        $getCourseActivities = DB::select('SELECT ca.*, se.exam_percentage FROM `course_activities` ca INNER JOIN student_exams se on ca.courses_id = se.courses_id AND ca.student_id = ' . $student_id . ' AND se.module_id = ca.module_id WHERE ca.student_id = ' . $student_id . ' AND ca.courses_id = ' . $course_id . ' AND ca.deleted_at is null');
+		$getUserInfo = User::where('id', $student_id)->first();
+
+
+        $fullcourse = DB::select('
+        SELECT
+            u.id user_id, u.first_name, u.last_name,
+            ca.courses_id, c.title courses_name,
+            ca.module_id, cm.name module_name, cm.id lessons_id,
+            cl.title lessons_name,
+            CASE WHEN ca.completed_date IS NULL THEN 0 ELSE 1 END isCompleted
+        FROM users u
+        INNER JOIN course_activities ca ON u.id = ca.student_id
+        INNER JOIN courses c ON ca.courses_id = ?
+        INNER JOIN courses_modules cm ON ca.module_id = cm.id AND c.id = cm.courses_id
+        INNER JOIN course_lessons cl ON cm.id = cl.module_id
+        WHERE u.id = ?
+    ', [$course_id, $student_id]);
+
+
+        return view('admin.report.studentview',compact('fullcourse','getCoursePurchase', 'getCourseModule', 'getLicense', 'getCourseActivities', 'getUserInfo'));
+        // $pdf = PDF::loadView('admin.report.report_download', $data);
+        // return $pdf->download('pdfview.pdf');
+    }
+
+
 }
