@@ -100,7 +100,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::post('/course/destroy-course', [CourseController::class, 'destroy_course'])->name('course.destroy-course');
 	Route::get('/course/{courses_id}/{id}/course-lesson-add', [CourseController::class, 'course_lesson_add']);
     Route::post('course/destroy-course-lesson', [CourseController::class, 'destroy_course_lesson'])->name('addon.destroy-course-lesson');
-	
+
 	//Course Module
     Route::get('/course/{id}/course-module-add', [CourseController::class, 'course_module_add'])->name('course.{id}.course-module-add');
     Route::post('/course/store-course-module', [CourseController::class, 'store_course_module'])->name('addon.store-course-module');
@@ -112,11 +112,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     //course lesson
     Route::post('/course/store-course-lesson', [CourseController::class, 'store_course_lesson'])->name('course.store-course-lesson');
     Route::post('/course/{id}/update-course-lesson', [CourseController::class, 'update_course_lesson']);
-	
+
 	//payment list
     Route::get('/payment/show', [CourseController::class, 'payment_show'])->name('payment.show');
     Route::post('/payment/get-addons-history', [CourseController::class, 'get_addons_history'])->name('payment.get-addons-history');
-	
+
 	//user all members
     Route::get('/admin-show', [MemberController::class, 'admin_lists'])->name('admin-show');
     Route::get('/user/{id}/edit', [MemberController::class, 'edit_admin'])->name('user.{id}.edit');
@@ -130,7 +130,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::put('/student/{id}/update', [MemberController::class, 'update_student'])->name('student.{id}.update');
     Route::get('/user/{id}/password', [MemberController::class, 'change_user_password']);
     Route::put('/user-password/{id}/update', [MemberController::class, 'user_password_update']);
-	
+
 	//Exam Master
     Route::get('/question/exam-show', [ExamMasterController::class, 'index'])->name('question.exam-show');
     Route::post('/question/get-module', [ExamMasterController::class, 'get_module'])->name('question.get-module');
@@ -146,18 +146,18 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::get('/question/{id}/edit', [ExamMasterController::class, 'edit_question'])->name('question.{id}.edit');
     Route::post('/question/update', [ExamMasterController::class, 'update_question'])->name('question.update');
 	Route::post('/question/question-destroy', [ExamMasterController::class, 'question_destroy'])->name('question.question-destroy');
-	
+
 	//doument
     Route::get('/document/show', [DocumentController::class, 'index'])->name('document.show');
     Route::post('/document/store', [DocumentController::class, 'store'])->name('document.store');
     Route::post('/document/set-sort', [DocumentController::class, 'set_sort'])->name('document.set-sort');
     Route::post('/document/destroy', [DocumentController::class, 'destroy'])->name('document.destroy');
-	
+
 	//courses preview
     Route::get('/course/course-preview', [CourseController::class, 'course_preview'])->name('course.course-preview');
     Route::get('/course/preview/{id}/{module_id}/{lession_id}/{forward}', [CourseController::class, 'courses']);
     Route::post('/course/preview/course-module-change', [CourseController::class, 'course_module_change'])->name('course.course-module-change');
-	
+
 	//License
     Route::get('license/add-license', [LicenseController::class, 'index'])->name('license.add-license');
     Route::post('license/store-license', [LicenseController::class, 'store_license'])->name('license.store-license');
@@ -165,22 +165,23 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::post('license/edit', [LicenseController::class, 'edit'])->name('license.edit');
     Route::post('license/update', [LicenseController::class, 'update'])->name('license.update');
 	Route::post('license/import-license-number', [LicenseController::class, 'import_license_number'])->name('license.import-license-number');
-	
+
 	//report
 	Route::get('/report', [ProfileController::class, 'report'])->name('report');
     Route::get('/report/{course_id}/{student_id}/download', [ProfileController::class, 'report_download']);
-	
+    Route::get('/report/{course_id}/{student_id}/view', [ProfileController::class, 'report_view']);
+
 	//generate certificate
 	Route::get('/certificate', [CertificatesController::class, 'show'])->name('show');
     Route::get('/get-certificate/{id}/{student_id}/download', [CertificatesController::class, 'index'])->name('get-certificate.{id}.download');
-	
+
 	//Security Question
     Route::get('security/add-question', [SecurityQuestionController::class, 'index'])->name('security.add-question');
     Route::post('security/store-question', [SecurityQuestionController::class, 'store_question'])->name('security.store-question');
     Route::post('security/destroy', [SecurityQuestionController::class, 'destroy'])->name('security.destroy');
     Route::post('security/edit', [SecurityQuestionController::class, 'edit'])->name('security.edit');
     Route::post('security/update', [SecurityQuestionController::class, 'update'])->name('security.update');
-	
+
 	//Guideline
     Route::get('guide/show', [GuidelineController::class, 'index'])->name('guide.show');
     Route::post('guide/store', [GuidelineController::class, 'store'])->name('guide.store');
@@ -194,15 +195,15 @@ Route::group(['as' => 'student.', 'prefix' => 'student', 'namespace' => 'student
 	//security question
     Route::get('/login-security-question', [StudentDashboardController::class, 'login_security_question'])->name('login-security-question');
     Route::post('/set-security-question', [StudentDashboardController::class, 'set_security_question'])->name('set-security-question');
-	
+
     //Dashboard
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [StudentProfileController::class, 'profile'])->name('profile');    
+    Route::get('/profile', [StudentProfileController::class, 'profile'])->name('profile');
     Route::get('/summary', [StudentDashboardController::class, 'summary'])->name('summary');
     Route::get('/questions', [StudentDashboardController::class, 'questions'])->name('questions');
     Route::get('/quiz', [StudentExamController::class, 'index'])->name('quiz');
 	Route::get('/guideline', [StudentDashboardController::class, 'guideline'])->name('guideline');
-	
+
 	//course
 	Route::get('/course-lists', [StudentCoursesController::class, 'courses_list'])->name('course-lists');
     Route::get('/course/{id}/{module_id}/{lession_id}/{forward}', [StudentCoursesController::class, 'courses']);
@@ -216,21 +217,21 @@ Route::group(['as' => 'student.', 'prefix' => 'student', 'namespace' => 'student
     //address modify
     Route::get('/modify-address', [StudentProfileController::class, 'modify_address'])->name('modify-address');
     Route::post('/address/{id}/update', [StudentProfileController::class, 'update']);
-	
+
 	//exam
     Route::get('/join-exam/{id}', [StudentExamController::class, 'join_exam'])->name('join-exam.{id}');
     Route::post('/store-exam', [StudentExamController::class, 'store_exam'])->name('store-exam');
 	Route::get('/view-result/{id}', [StudentExamController::class, 'view_result'])->name('view-result.{id}');
-	
+
 	//doument
 	Route::get('/certificate', [CourseCertificatesController::class, 'show'])->name('show');
     Route::get('/document', [DocumentController::class, 'document_show'])->name('document');
 	Route::get('/report', [CourseCertificatesController::class, 'report'])->name('report');
     Route::get('/report/{course_id}/download', [CourseCertificatesController::class, 'report_download']);
-	
+
 	//payment details
 	Route::post('/payment/get-payment-history', [StudentCoursesController::class, 'get_payment_history'])->name('payment.get-payment-history');
-	
+
 	//generate certificate
     Route::get('/get-certificate/{id}/download', [CourseCertificatesController::class, 'index'])->name('get-certificate.{id}.download');
     Route::get('/get-certificate-c2', [CourseCertificatesController::class, 'certificate_c2'])->name('get-certificate-c2');
