@@ -39,10 +39,10 @@
     <script>
         // Set Stripe publishable key to initialize Stripe.js
         // Payment Test Stripe
-        // const stripe = Stripe('pk_test_btBWD2dhfXyEyfmbbSVeTcc300dVDiQZC4');
+        const stripe = Stripe('pk_test_btBWD2dhfXyEyfmbbSVeTcc300dVDiQZC4');
 
         // Payment Live Stripe
-        const stripe = Stripe('pk_live_gm4s067vzZT6mdg8aXDlMyIw00ypsD0gX6');
+        // const stripe = Stripe('pk_live_gm4s067vzZT6mdg8aXDlMyIw00ypsD0gX6');
 
         // Payment request handler
         $(document).ready(function() {

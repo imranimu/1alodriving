@@ -19,6 +19,16 @@
     @yield('js')
 
     <script></script>
+
+    <style>
+        body .navbar-area .nav-container .logo a img{
+            max-width: 290px;
+        }
+        body .navbar-area{
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    </style>
 </head>
 @php $common_setting = getSettings(); @endphp
 
@@ -84,70 +94,10 @@
     <!-- navbar start -->
     <div class="navbar-area">
         <!-- navbar top start -->
-        <div class="navbar-top bg-gray">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 text-md-left text-center">
-                        <ul>
-                            <li>
-                                <p><i class="fa fa-map-marker"></i> {{ $common_setting->mobile_no }}</p>
-                            </li>
-                            <li>
-                                <p><i class="fa fa-envelope-o"></i> {{ $common_setting->email }}</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <ul class="topbar-right text-md-right text-center">
-                            <li class="social-area mr-1">
-                                @if ($common_setting->facebook_link != '')
-                                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                @endif
-                                @if ($common_setting->twitter_link != '')
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                @endif
-                                @if ($common_setting->instagram_link != '')
-                                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                @endif
-                                @if ($common_setting->pinterest_link != '')
-                                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                @endif
-                                @if ($common_setting->youtube_link != '')
-                                    <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a>
-                                @endif
-                                @if ($common_setting->linkedin_link != '')
-                                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                @endif
-                            </li>
-                            @if (Auth::check() && Auth::user()->is_role == 1)
-                                <li class="mr-0">
-                                    <a href="{{ url('admin/dashboard') }}">Admin</a>
-                                </li>
-                                <li class="mr-0">
-                                    <a href="javascript:void(0)" onclick="logout()">{{ __('Logout') }}</a>
-                                </li>
-                            @elseif (Auth::check() && Auth::user()->is_role == 2)
-                                <li class="mr-0">
-                                    <a href="{{ url('student/dashboard') }}">My Account</a>
-                                </li>
-                                <li class="mr-0">
-                                    <a href="javascript:void(0)" onclick="logout()">{{ __('Logout') }}</a>
-                                </li>
-                            @else
-                                <li class="mr-0">
-                                    <a href="{{ url('/login') }}"><i class="fa fa-user" aria-hidden="true"></i>
-                                        Login</a>
-                                </li>
-                            @endif
-                        </ul>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                            style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+            style="display: none;">
+            @csrf
+        </form>
         <nav class="navbar navbar-area-1 navbar-area navbar-expand-lg">
             <div class="container nav-container">
                 <div class="responsive-mobile-menu">
@@ -171,6 +121,26 @@
                         <li><a href="{{ url('/courses') }}">Courses</a></li>
                         <!--<li><a href="{{ url('/team') }}">Instructors</a></li>-->
                         <li><a href="{{ url('/contact-us') }}">Contact Us</a></li>
+                        @if (Auth::check() && Auth::user()->is_role == 1)
+                                <li class="mr-0">
+                                    <a href="{{ url('admin/dashboard') }}">Admin</a>
+                                </li>
+                                <li class="mr-0">
+                                    <a href="javascript:void(0)" onclick="logout()">{{ __('Logout') }}</a>
+                                </li>
+                            @elseif (Auth::check() && Auth::user()->is_role == 2)
+                                <li class="mr-0">
+                                    <a href="{{ url('student/dashboard') }}">My Account</a>
+                                </li>
+                                <li class="mr-0">
+                                    <a href="javascript:void(0)" onclick="logout()">{{ __('Logout') }}</a>
+                                </li>
+                            @else
+                                <li class="mr-0">
+                                    <a href="{{ url('/login') }}"><i class="fa fa-user" aria-hidden="true"></i>
+                                        Login</a>
+                                </li>
+                            @endif
                     </ul>
                 </div>
                 <div class="nav-right-part nav-right-part-desktop">
@@ -187,7 +157,7 @@
 
     <footer class="footer-area bg-overlay"
         style="background-image: url('{{ asset('assets/frontend/img/bg/2.jpg') }}');">
-        <div class="container">            
+        <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="widget widget_about pr-xl-4">
@@ -238,7 +208,7 @@
                         <h4 class="widget-title">Quick LInks</h4>
                         <ul>
                             <li><a href="{{ url('/') }}">Home</a></li>
-                            <li><a href="{{ url('/about-us') }}">About</a></li> 
+                            <li><a href="{{ url('/about-us') }}">About</a></li>
                             <li><a href="{{ url('/contact-us') }}">Contact Us</a></li>
                             <li><a href="{{ url('/faqs') }}">FAQ's</a></li>
                             <li><a href="{{ url('/helpfullinks') }}">Helpful Link</a></li>
@@ -273,10 +243,10 @@
         <span class="back-top"><i class="fa fa-angle-up"></i></span>
     </div>
     <!-- back to top area end -->
-    
+
     <!--<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>-->
     <!--<div class="elfsight-app-e06384c1-0bf5-4d73-8f25-28760195f98c"></div>-->
-    
+
     <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
     <div class="elfsight-app-cd665c59-aeab-44d4-80dc-c73f25b7a08c"></div>
 
