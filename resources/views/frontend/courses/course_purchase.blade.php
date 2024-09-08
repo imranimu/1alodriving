@@ -33,14 +33,14 @@
                             </div>
                         @endif
                     </div>
-                    <h4 class="mb-3">Let's get started! Please tell us your name and email: </h4>
+                    <h4 class="mb-3">Regestration: </h4>
                     <hr class="separator-aqua">
 
                     <form class="needs-validation" action="{{ route('student.course-payment-validation') }}"
                         id="checkoutForm" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="first_name" class="form-label mb-2">First Name</label>
                                 <input type="text" id="first_name" class="form-control mb-3"
                                     placeholder="Enter First Name" value="{{ old('first_name') }}" name="first_name"
@@ -49,7 +49,15 @@
                                     <strong>{{ $errors->first('first_name') }}</strong>
                                 @endif
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label for="middle_name" class="form-label mb-2">Middle name</label>
+                                <input type="text" id="middle_name" class="form-control mb-3"
+                                    placeholder="Enter Middle Name" value="{{ old('middle_name') }}" name="middle_name">
+                                @if ($errors->has('middle_name'))
+                                    <strong>{{ $errors->first('middle_name') }}</strong>
+                                @endif
+                            </div>
+                            <div class="col-md-4">
                                 <label for="last_name" class="form-label mb-2">Last Name</label>
                                 <input type="text" id="last_name" class="form-control mb-3"
                                     placeholder="Enter Last Name" value="{{ old('last_name') }}" name="last_name"
@@ -67,7 +75,7 @@
                                 @if ($errors->has('student_email'))
                                     <strong>{{ $errors->first('student_email') }}</strong>
                                 @endif
-                            </div> 
+                            </div>
                             <div class="col-md-6">
                                 <label for="mobile_no" class="form-label mb-2">Mobile Number</label>
                                 <input type="text" id="mobile_no" class="form-control mb-3"
@@ -77,7 +85,7 @@
                                 @if ($errors->has('mobile_no'))
                                     <strong>{{ $errors->first('mobile_no') }}</strong>
                                 @endif
-                            </div> 
+                            </div>
 
                             {{-- radio button for Yes/No --}}
 
@@ -101,7 +109,7 @@
                                 @if ($errors->has('is_differently_abled'))
                                     <strong>{{ $errors->first('is_differently_abled') }}</strong>
                                 @endif
-                            </div> 
+                            </div>
 
                             <div class="col-md-6">
                                 <label for="dob" class="form-label mb-2">Date of Birth</label>
@@ -129,11 +137,11 @@
                                 @endif
                             </div>
 
-                            
+
 
                             <div class="col-md-12">
-                                <label for="address1" class="form-label mb-2">Address</label>
-                                <textarea name="address1" id="address1" cols="30" class="form-control mb-3" rows="4" placeholder="Address">{{ old('address1') }}</textarea>
+                                <label for="address1" class="form-label mb-2">Streets Name & Number</label>
+                                <textarea name="address1" id="address1" cols="30" class="form-control mb-3" rows="2" placeholder="Streets Name & Number">{{ old('address1') }}</textarea>
                                 @if ($errors->has('address1'))
                                     <strong>{{ $errors->first('address1') }}</strong>
                                 @endif
@@ -150,7 +158,19 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="postcode" class="form-label mb-2">Postcode</label>
+
+                                <label for="country" class="form-label mb-2">State</label>
+
+                                <input type="text" name="country" class="form-control mb-3" id="country"
+                                    placeholder="State"
+                                    value="{{ old('country') }}">
+                                @if ($errors->has('country'))
+                                    <strong>{{ $errors->first('country') }}</strong>
+                                @endif
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="postcode" class="form-label mb-2">Zipcode</label>
                                 <input type="text" name="postcode" class="form-control postcode-separate mb-3"
                                     id="postcode" placeholder="Zipcode"
                                     value="{{ old('postcode') }}"
@@ -160,23 +180,11 @@
                                 @endif
                             </div>
 
-                            <div class="col-md-6">
-
-                                <label for="country" class="form-label mb-2">State</label> 
-
-                                <input type="text" name="country" class="form-control mb-3" id="country"
-                                    placeholder="State"
-                                    value="{{ old('country') }}">  
-                                @if ($errors->has('country'))
-                                    <strong>{{ $errors->first('country') }}</strong>
-                                @endif
-                            </div> 
-                            
 
 							<div class="col-md-6">
                                 <label for="student_password" class="form-label mb-2">Student Password</label>
                                 <input type="password" id="student_password" class="form-control mb-3"
-                                    placeholder="STUDENT PASSWORD" name="student_password"
+                                    placeholder="Student Password" name="student_password"
                                     value="{{ old('student_password') }}" minlength="6" maxlength="10" autocomplete="off" required="">
                                 <span id="error"></span>
                                 @if ($errors->has('student_password'))
@@ -191,279 +199,65 @@
                             <div class="col-md-12">
                                 <h4 class="mb-3">Security Question</h4>
                             </div>
-							
-							<div class="col-md-12">
-                                
-                                <select name="question[q1]" id="question[q1]" class="form-control mb-3">
-                                    <option value="">Select Question-1</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 1)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q1') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
+
+                            <div class="col-md-6">
+                                @if (!blank($getSecurityQuestion))
+                                    @php
+                                        $questionsToShow = $getSecurityQuestion->where('is_type', 1)->take(5);
+                                    @endphp
+                                    @foreach ($questionsToShow as $index => $question)
+                                        <div class="mb-3">
+                                            <select name="question[q{{ $index + 1 }}]" id="question[q{{ $index + 1 }}]" class="form-control">
+                                                <!--<option value="">Select Question-{{ $index + 1 }}</option>-->
+                                                <option value="{{ $question->id }}" {{ $question->id == old("question.q" . ($index + 1)) ? 'selected' : '' }}>
+                                                    {{ $question->question }}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has("question.q" . ($index + 1)))
+                                                <strong>The question-{{ $index + 1 }} field is required.</strong>
                                             @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q1'))
-                                    <strong>The question-1 field is required.</strong>
-                                @endif
-                            </div>
+                                        </div>
 
-                            <div class="col-md-12"> 
-                                <input type="text" id="question[a1]" name="question[a1]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a1') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a1'))
-                                    <strong>The Answer-1 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q2]" id="question[q2]" class="form-control mb-3">
-                                    <option value="">Select Question-2</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 2)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q2') ? 'selected' : '' }}>
-													{{ $val->question }}</option>
+                                        <div class="mb-3">
+                                            <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
+                                            <span id="error"></span>
+                                            @if ($errors->has("question.a" . ($index + 1)))
+                                                <strong>The Answer-{{ $index + 1 }} field is required.</strong>
                                             @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q2'))
-                                    <strong>The question-2 field is required.</strong>
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
 
-                            <div class="col-md-12">
-                                <input type="text" id="question[a2]" name="question[a2]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a2') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a2'))
-                                    <strong>The Answer-2 field is required.</strong>
-                                @endif
-                            </div>
-                            
-                            <div class="col-md-12"> 
-                                <select name="question[q3]" id="question[q3]" class="form-control mb-3">
-                                    <option value="">Select Question-3</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 1)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q3') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
+                            <div class="col-md-6">
+                                @if (!blank($getSecurityQuestion))
+                                    @php
+                                        $questionsToShow = $getSecurityQuestion->where('is_type', 2)->take(5);
+                                    @endphp
+                                    @foreach ($questionsToShow as $index => $question)
+                                        <div class="mb-3">
+                                            <select name="question[q{{ $index + 1 }}]" id="question[q{{ $index + 1 }}]" class="form-control">
+                                                <!--<option value="">Select Question-{{ $index + 1 }}</option>-->
+                                                <option value="{{ $question->id }}" {{ $question->id == old("question.q" . ($index + 1)) ? 'selected' : '' }}>
+                                                    {{ $question->question }}
+                                                </option>
+                                            </select>
+                                            @if ($errors->has("question.q" . ($index + 1)))
+                                                <strong>The question-{{ $index + 1 }} field is required.</strong>
                                             @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q3'))
-                                    <strong>The question-3 field is required.</strong>
-                                @endif
-                            </div>
+                                        </div>
 
-                            <div class="col-md-12"> 
-                                <input type="text" id="question[a3]" name="question[a3]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a3') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a3'))
-                                    <strong>The Answer-3 field is required.</strong>
-                                @endif
-                            </div>
-                            
-                            <div class="col-md-12"> 
-                                <select name="question[q4]" id="question[q4]" class="form-control mb-3">
-                                    <option value="">Select Question-4</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 2)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q4') ? 'selected' : '' }}>
-													{{ $val->question }}</option>
+                                        <div class="mb-3">
+                                            <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
+                                            <span id="error"></span>
+                                            @if ($errors->has("question.a" . ($index + 1)))
+                                                <strong>The Answer-{{ $index + 1 }} field is required.</strong>
                                             @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q4'))
-                                    <strong>The question-4 field is required.</strong>
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
 
-                            <div class="col-md-12">
-                                <input type="text" id="question[a4]" name="question[a4]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a4') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a4'))
-                                    <strong>The Answer-4 field is required.</strong>
-                                @endif
-                            </div>
-                            
-                                                        <div class="col-md-12"> 
-                                <select name="question[q5]" id="question[q5]" class="form-control mb-3">
-                                    <option value="">Select Question-5</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 1)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q5') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q5'))
-                                    <strong>The question-5 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <input type="text" id="question[a5]" name="question[a5]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a5') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a5'))
-                                    <strong>The Answer-5 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q6]" id="question[q6]" class="form-control mb-3">
-                                    <option value="">Select Question-6</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 2)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q6') ? 'selected' : '' }}>
-													{{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q6'))
-                                    <strong>The question-6 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12">
-                                <input type="text" id="question[a6]" name="question[a6]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a6') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a6'))
-                                    <strong>The Answer-6 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q7]" id="question[q7]" class="form-control mb-3">
-                                    <option value="">Select Question-7</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 1)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q7') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q7'))
-                                    <strong>The question-7 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <input type="text" id="question[a7]" name="question[a7]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a7') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a7'))
-                                    <strong>The Answer-7 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q8]" id="question[q8]" class="form-control mb-3">
-                                    <option value="">Select Question-8</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 2)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q8') ? 'selected' : '' }}>
-													{{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q8'))
-                                    <strong>The question-8 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12">
-                                <input type="text" id="question[a8]" name="question[a8]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a8') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a8'))
-                                    <strong>The Answer-8 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q9]" id="question[q9]" class="form-control mb-3">
-                                    <option value="">Select Question-9</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 1)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q9') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q9'))
-                                    <strong>The question-9 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <input type="text" id="question[a9]" name="question[a9]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a9') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a9'))
-                                    <strong>The Answer-9 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12"> 
-                                <select name="question[q10]" id="question[q10]" class="form-control mb-3">
-                                    <option value="">Select Question-10</option>
-                                    @if (!blank($getSecurityQuestion))
-                                        @foreach ($getSecurityQuestion as $val)
-                                            @if ($val->is_type == 2)
-                                                <option value="{{ $val->id }}"
-                                                    {{ $val->id == old('question.q10') ? 'selected' : '' }}>
-                                                    {{ $val->question }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('question.q10'))
-                                    <strong>The question-10 field is required.</strong>
-                                @endif
-                            </div>
-
-                            <div class="col-md-12">
-                                <input type="text" id="question[a10]" name="question[a10]" class="form-control mb-3"
-                                    placeholder="Answer" value="{{ old('question.a10') }}">
-                                <span id="error"></span>
-                                @if ($errors->has('question.a10'))
-                                    <strong>The Answer-10 field is required.</strong>
-                                @endif
-                            </div>
-							
-							
                             @php
                                 $parent_onclick = old('parent_email') != '' ? 'parentEmail(0)' : 'parentEmail(1)';
                                 $parent_text = old('parent_email') != '' ? 'Nevermind, I\'m a Student' : 'Wait, I\'m a parent!';
@@ -478,27 +272,27 @@
                                 <p>As a parent, you are purchasing a course for your student, whose email you provided in
                                     the field above. If you'd like, you may enter your own email below to track your
                                     student's progress.</p>
-                                    
+
                                 <div class="form-group">
                                     <input type="text" id="parent_name" class="form-control mb-3"
                                     placeholder="PARENT (YOUR) NAME" name="parent_name"
                                     value="{{ old('parent_phone') }}">
-                                    
+
                                     @if ($errors->has('parent_name'))
                                         <strong>{{ $errors->first('parent_name') }}</strong>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <input type="text" id="parent_relation" class="form-control mb-3"
                                     placeholder="PARENT (YOUR) RELATION WITH STUDENT" name="parent_relation"
                                     value="{{ old('parent_relation') }}">
-                                    
+
                                     @if ($errors->has('parent_relation'))
                                         <strong>{{ $errors->first('parent_relation') }}</strong>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <input type="email" id="parent_email" class="form-control mb-3"
                                         placeholder="PARENT (YOUR) EMAIL" name="parent_email"
@@ -507,28 +301,28 @@
                                         <strong>{{ $errors->first('parent_email') }}</strong>
                                     @endif
                                 </div>
-                            
+
                                 <div class="form-group">
                                     <input type="text" id="parent_phone" class="form-control mb-3"
                                     placeholder="PARENT (YOUR) PHONE" name="parent_phone"
                                     value="{{ old('parent_phone') }}">
-                                    
+
                                     @if ($errors->has('parent_phone'))
                                         <strong>{{ $errors->first('parent_phone') }}</strong>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <input type="text" id="parent_address" class="form-control mb-3"
                                     placeholder="PARENT (YOUR) FULL ADDRESS" name="parent_address"
                                     value="{{ old('parent_address') }}">
-                                    
+
                                     @if ($errors->has('parent_address'))
                                         <strong>{{ $errors->first('parent_address') }}</strong>
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-12">
                                 <button type="submit" id="submit" class="btn btn-primary w-100">
                                     STEP 1 <i class='fa fa-arrow-right' aria-hidden='true'></i>
@@ -555,7 +349,7 @@
 
                         </li>
                         <li class="list-group-item d-flex justify-content-between" id="cartItem">
-                            <div style="font-size:24px;">Total</div>
+                            <div style="font-size:24px;">Course Fee</div>
                             <div id="totalPrice" style="font-size:24px;">
                                 <strong>${{ $getCourse['price'] }} </strong>
                             </div>
