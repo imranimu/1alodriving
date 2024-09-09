@@ -92,11 +92,9 @@ class PaymentController extends Controller
     {
         $arr = [
             'first_name' => 'required',
-            'last_name' => 'required',
             'student_email' => 'required|unique:users,email',
             "question"    => "required|array",
-            "question.*"  => "required|string",
-            'dob' => 'required|date|before:' . now()->subYears(18)->format('Y-m-d'),
+            "question.*"  => "required|string"
         ];
 
         if ($request->parent_email != "") {
@@ -237,10 +235,10 @@ class PaymentController extends Controller
         $arr[0]['id'] = $request['q1'];
         $arr[0]['question'] = getQuestionName($request['q1']);
         $arr[0]['ans'] = $request['a1'];
-        $arr[1]['id'] = $request['q2'];
-        $arr[1]['question'] = getQuestionName($request['q2']);
-        $arr[1]['ans'] = $request['a2'];
-        $arr[2]['id'] = $request['q3'];
+        $arr[1]['id'] = $request['q6'];
+        $arr[1]['question'] = getQuestionName($request['q6']);
+        $arr[1]['ans'] = $request['a6'];
+        /*$arr[2]['id'] = $request['q3'];
         $arr[2]['question'] = getQuestionName($request['q3']);
         $arr[2]['ans'] = $request['a3'];
         $arr[3]['id'] = $request['q4'];
@@ -263,7 +261,7 @@ class PaymentController extends Controller
         $arr[8]['ans'] = $request['a9'];
         $arr[9]['id'] = $request['q10'];
         $arr[9]['question'] = getQuestionName($request['q10']);
-        $arr[9]['ans'] = $request['a10'];
+        $arr[9]['ans'] = $request['a10'];*/
 
         if (!blank($arr)) {
             foreach ($arr as $val) {
