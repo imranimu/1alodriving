@@ -40,7 +40,7 @@
                         id="checkoutForm" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="first_name" class="form-label mb-2">First Name</label>
                                 <input type="text" id="first_name" class="form-control mb-3"
                                     placeholder="Enter First Name" value="{{ old('first_name') }}" name="first_name"
@@ -49,7 +49,7 @@
                                     <strong>{{ $errors->first('first_name') }}</strong>
                                 @endif
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <label for="middle_name" class="form-label mb-2">Middle name</label>
                                 <input type="text" id="middle_name" class="form-control mb-3"
                                     placeholder="Enter Middle Name" value="{{ old('middle_name') }}" name="middle_name">
@@ -65,7 +65,7 @@
                                 @if ($errors->has('last_name'))
                                     <strong>{{ $errors->first('last_name') }}</strong>
                                 @endif
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <label for="student_email" class="form-label mb-2">Student Email</label>
                                 <input type="text" id="student_email" class="form-control mb-3"
@@ -94,7 +94,7 @@
                                 $no = old('is_differently_abled') == 'no' ? 'checked' : '';
                             @endphp
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label for="is_differently_abled" class="form-label mb-2 mr-3">Are you 18 year old?</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="is_differently_abled"
@@ -119,9 +119,9 @@
                                 @if ($errors->has('dob'))
                                     <strong>{{ $errors->first('dob') }}</strong>
                                 @endif
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="gender" class="form-label mb-2">Gender</label>
                                 <select name="gender" id="gender" class="form-control">
                                     <option value="">Select</option>
@@ -135,19 +135,17 @@
                                 @if ($errors->has('female'))
                                     <strong>{{ $errors->first('female') }}</strong>
                                 @endif
-                            </div>
+                            </div> --}}
 
-
-
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label for="address1" class="form-label mb-2">Streets Name & Number</label>
                                 <textarea name="address1" id="address1" cols="30" class="form-control mb-3" rows="2" placeholder="Streets Name & Number">{{ old('address1') }}</textarea>
                                 @if ($errors->has('address1'))
                                     <strong>{{ $errors->first('address1') }}</strong>
                                 @endif
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="city_town" class="form-label mb-2">City</label>
                                 <input type="text" name="city_town" class="form-control" id="city_town"
                                     placeholder="City"
@@ -178,7 +176,7 @@
                                 @if ($errors->has('postcode'))
                                     <strong>{{ $errors->first('postcode') }}</strong>
                                 @endif
-                            </div>
+                            </div> --}}
 
 
 							<div class="col-md-6">
@@ -203,7 +201,7 @@
                             <div class="col-md-6">
                                 @if (!blank($getSecurityQuestion))
                                     @php
-                                        $questionsToShow = $getSecurityQuestion->where('is_type', 1)->take(5);
+                                        $questionsToShow = $getSecurityQuestion->where('is_type', 1)->take(1);
                                     @endphp
                                     @foreach ($questionsToShow as $index => $question)
                                         <div class="mb-3">
@@ -232,7 +230,7 @@
                             <div class="col-md-6">
                                 @if (!blank($getSecurityQuestion))
                                     @php
-                                        $questionsToShow = $getSecurityQuestion->where('is_type', 2)->take(5);
+                                        $questionsToShow = $getSecurityQuestion->where('is_type', 2)->take(1);
                                     @endphp
                                     @foreach ($questionsToShow as $index => $question)
                                         <div class="mb-3">

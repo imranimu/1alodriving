@@ -17,8 +17,8 @@
                                 <li><a href="{{ url('/student/course-lists') }}"><i class="fa fa-history" aria-hidden="true"></i> Courses</a></li>
                                 <li><a href="javascript:void(0)" onclick="logout()"><i class="fa fa-sign-out"></i> Sign out</a></li>
                             </ul>
-                        </div>                        
-                    </div>                    
+                        </div>
+                    </div>
                 </div> -->
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -35,7 +35,6 @@
                                         <td class="nameshow-td">
                                             {{ Auth::user()->email }} </td>
                                     </tr>
-
 
                                     <tr>
                                         <td class="commonname-td">
@@ -126,7 +125,7 @@
                                             @endif
                                         </div>
                                     </div>
-									
+
 									<div class="form-group row">
                                         <div class="col-sm-3 col-form-label">
                                             <label>DOB *</label>
@@ -220,11 +219,11 @@
                                             <label>State *</label>
                                         </div>
                                         <div class="col-sm-9">
-                                            
+
                                             <input type="text" name="country" class="form-control" id="country"
                                                 placeholder="State"
                                                 value="{{ old('country') != '' ? old('country') : Auth::user()->country }}">
-                                            
+
                                             <!--<select class="form-control" name="country" id="country">-->
                                             <!--    <option value="">---select country---</option>-->
                                             <!--    @if (!blank(getCountry()))-->
