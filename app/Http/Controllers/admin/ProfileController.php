@@ -160,6 +160,10 @@ class ProfileController extends Controller
 
 	public function report(Request $request)
     {
+        //dd($request->all());
+
+        $search = $request->q;
+
         $sql = CoursePurchase::selectRaw('course_purchases.id, course_purchases.student_id, course_purchases.course_id, course_purchases.total_amount, course_purchases.grand_amount, course_purchases.transaction_id, course_purchases.payment_status, course_purchases.total_module, course_purchases.status, course_purchases.stripe_response, course_purchases.created_at, courses.title, courses.image, courses_modules.id as module_id')->where(['course_purchases.payment_status' => '1', 'course_purchases.status' => '1'])
             ->whereRaw('stripe_response !=""')
             ->leftjoin('courses', function ($q) {
@@ -170,6 +174,13 @@ class ProfileController extends Controller
             })
             ->with('get_user')
             ->GroupBy('course_purchases.student_id');
+
+        // if (!empty($search)) {
+        //     $sql->where(function ($query) use ($search) {
+        //         $query->where('users.name', 'LIKE', '%' . $search . '%')
+        //             ->orWhere('users.email', 'LIKE', '%' . $search . '%');
+        //     });
+        // }
 
         $lists = 1;
         $perPage = 10;
@@ -217,8 +228,10 @@ class ProfileController extends Controller
         WHERE u.id = ?
     ', [$course_id, $student_id]);
 
+    $getAllQuestion = questionAnswer($student_id);
 
-        return view('admin.report.studentview',compact('fullcourse','getCoursePurchase', 'getCourseModule', 'getLicense', 'getCourseActivities', 'getUserInfo'));
+
+        return view('admin.report.studentview',compact('fullcourse','getCoursePurchase', 'getCourseModule', 'getLicense', 'getCourseActivities', 'getUserInfo', 'getAllQuestion', 'student_id'));
         // $pdf = PDF::loadView('admin.report.report_download', $data);
         // return $pdf->download('pdfview.pdf');
     }

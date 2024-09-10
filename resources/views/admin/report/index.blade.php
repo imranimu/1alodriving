@@ -33,7 +33,7 @@
                                 {{ $records->currentPage() * $records->perPage() > $records->total() ? $records->total() : $records->currentPage() * $records->perPage() }}
                                 of {{ $records->total() }} data(s)</span>
                         </div>
-                        <div class="col-md-4 mb-2">
+                        {{-- <div class="col-md-4 mb-2">
                             <form action="{{ url('admin/report') }}" method="get">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search" name="q"
@@ -41,7 +41,7 @@
                                     <button class="btn btn-primary" type="Submit">Search</button>
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="live-preview">
                         <div class="table-responsive">
