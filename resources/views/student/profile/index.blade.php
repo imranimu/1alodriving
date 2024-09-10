@@ -36,6 +36,7 @@
                                             {{ Auth::user()->email }} </td>
                                     </tr>
 
+
                                     <tr>
                                         <td class="commonname-td">
 
@@ -240,10 +241,83 @@
                                         </div>
                                     </div>
 
+                                    @if (!blank($filteredSecurityQuestions))
+                                    <h4 class="mb-3">Security Question</h4>
+
+
                                     <div class="form-group row">
-                                        <div class="col-sm-3 col-form-label">
+
+                                    <div class="col-md-6">
+                                        @if (!blank($filteredSecurityQuestions))
+                                            @php
+                                                $questionsToShow = $filteredSecurityQuestions->where('is_type', 1)->take(5);
+                                            @endphp
+                                            @foreach ($questionsToShow as $index => $question)
+                                                <div class="mb-3">
+
+                                                    <select name="question[q{{ $index + 1 }}]" id="question[q{{ $index + 1 }}]" class="form-control">
+                                                        <!--<option value="">Select Question-{{ $index + 1 }}</option>-->
+                                                        <option value="{{ $question->id }}" {{ $question->id == old("question.q" . ($index + 1)) ? 'selected' : '' }}>
+                                                            {{ $question->question }}
+                                                        </option>
+                                                    </select>
+                                                    @if ($errors->has("question.q" . ($index + 1)))
+                                                        <strong>The question-{{ $index + 1 }} field is required.</strong>
+                                                    @endif
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
+                                                    <span id="error"></span>
+                                                    @if ($errors->has("question.a" . ($index + 1)))
+                                                        <strong>The Answer-{{ $index + 1 }} field is required.</strong>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        @if (!blank($filteredSecurityQuestions))
+                                            @php
+                                                $questionsToShow = $filteredSecurityQuestions->where('is_type', 2)->take(5);
+                                            @endphp
+                                            @foreach ($questionsToShow as $index => $question)
+
+                                                <div class="mb-3">
+                                                    <select name="question[q{{ $index + 1 }}]" id="question[q{{ $index + 1 }}]" class="form-control">
+                                                        <!--<option value="">Select Question-{{ $index + 1 }}</option>-->
+                                                        <option value="{{ $question->id }}" {{ $question->id == old("question.q" . ($index + 1)) ? 'selected' : '' }}>
+                                                            {{ $question->question }}
+                                                        </option>
+                                                    </select>
+                                                    @if ($errors->has("question.q" . ($index + 1)))
+                                                        <strong>The question-{{ $index + 1 }} field is required.</strong>
+                                                    @endif
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
+                                                    <span id="error"></span>
+                                                    @if ($errors->has("question.a" . ($index + 1)))
+                                                        <strong>The Answer-{{ $index + 1 }} field is required.</strong>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    </div>
+
+                                    @endif
+
+
+
+
+                                    <div class="form-group row">
+                                        {{-- <div class="col-sm-3 col-form-label">
                                             <label></label>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-sm-3">
                                             <input type="submit" id="submit" name="submit"
@@ -256,6 +330,10 @@
                                 </form>
 
                             </div>
+
+
+
+
                         </div>
 
                     </div>

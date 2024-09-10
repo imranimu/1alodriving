@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\admin\UserQuestion;
+use App\Models\admin\SecurityQuestion;
 use Image;
 
 class ProfileController extends Controller
@@ -19,11 +21,36 @@ class ProfileController extends Controller
     {
         return view('student.profile.profile');
     }
-	
+
+    /*public function modify_address()
+    {
+        $action_url = 'student/address/' . Auth::user()->id . '/update';
+
+        $getSecurityQuestion = SecurityQuestion::where('status', '1')->get();
+
+        $getAnswer = UserQuestion::where('student_id', Auth::user()->id)->get();
+
+        return view('student.profile.index', compact('action_url', 'getSecurityQuestion', 'getAnswer'));
+    }*/
     public function modify_address()
     {
         $action_url = 'student/address/' . Auth::user()->id . '/update';
-        return view('student.profile.index', compact('action_url'));
+
+        // Fetch all active security questions
+        $getSecurityQuestion = SecurityQuestion::where('status', '1')->get();
+
+        // Fetch all answers provided by the student
+        $getAnswer = UserQuestion::where('student_id', Auth::user()->id)->get();
+
+        // Extract the question_ids that have answers
+        $answeredQuestionIds = $getAnswer->pluck('question_id')->toArray();
+
+        // Filter out questions that have already been answered
+        $filteredSecurityQuestions = $getSecurityQuestion->reject(function ($question) use ($answeredQuestionIds) {
+            return in_array($question->id, $answeredQuestionIds);
+        });
+
+        return view('student.profile.index', compact('action_url', 'filteredSecurityQuestions', 'getAnswer'));
     }
 
     /**
@@ -57,6 +84,7 @@ class ProfileController extends Controller
             'city_town' => 'required',
             'country' => 'required',
         ]);
+
         try {
             $update = [
                 'first_name' => $request->first_name,
@@ -69,11 +97,17 @@ class ProfileController extends Controller
                 'country' => $request->country,
 				'dob' => $request->dob,
                 'gender' => $request->gender,
-                'updated_at' => date('Y-m-d h:i:s')
+                'updated_at' => date('Y-m-d h:i:s'),
             ];
 
+            if (!empty($request->question)) {
+                $this->user_security_question_store($request->question);
+            }
+
             $data = User::find($id);
+
             $result = $data->update($update);
+
             if ($result > 0) :
                 $request->session()->flash('message', ['status' => 1, 'text' => 'User details successfully updated!']);
             else :
@@ -114,5 +148,84 @@ class ProfileController extends Controller
             $request->session()->flash('message', ['status' => 0,  'text' => 'Current Password does not match', 'current_pass' => $request->current_Password, 'new_pass' => $request->new_password, 'confirm_pass' => $request->confirm_password]);
         endif;
         return redirect()->back();
+    }
+
+    public function user_security_question_store($request)
+    {
+        $arr = [];
+
+        if (!empty($request['q1'])) {
+            $arr[0]['id'] = $request['q1'];
+            $arr[0]['question'] = getQuestionName($request['q1']);
+            $arr[0]['ans'] = $request['a1'];
+        }
+
+        if (!empty($request['q2'])) {
+            $arr[1]['id'] = $request['q2'];
+            $arr[1]['question'] = getQuestionName($request['q2']);
+            $arr[1]['ans'] = $request['a2'];
+        }
+
+        if (!empty($request['q3'])) {
+            $arr[2]['id'] = $request['q3'];
+            $arr[2]['question'] = getQuestionName($request['q3']);
+            $arr[2]['ans'] = $request['a3'];
+        }
+
+        if (!empty($request['q4'])) {
+            $arr[3]['id'] = $request['q4'];
+            $arr[3]['question'] = getQuestionName($request['q4']);
+            $arr[3]['ans'] = $request['a4'];
+        }
+
+        if (!empty($request['q5'])) {
+            $arr[4]['id'] = $request['q5'];
+            $arr[4]['question'] = getQuestionName($request['q5']);
+            $arr[4]['ans'] = $request['a5'];
+        }
+
+        if (!empty($request['q6'])) {
+            $arr[5]['id'] = $request['q6'];
+            $arr[5]['question'] = getQuestionName($request['q6']);
+            $arr[5]['ans'] = $request['a6'];
+        }
+
+        if(!empty($request['q7'])) {
+            $arr[6]['id'] = $request['q7'];
+            $arr[6]['question'] = getQuestionName($request['q7']);
+            $arr[6]['ans'] = $request['a7'];
+        }
+
+        if(!empty($request['q8'])) {
+            $arr[7]['id'] = $request['q8'];
+            $arr[7]['question'] = getQuestionName($request['q8']);
+            $arr[7]['ans'] = $request['a8'];
+        }
+
+        if(!empty($request['q9'])) {
+            $arr[8]['id'] = $request['q9'];
+            $arr[8]['question'] = getQuestionName($request['q9']);
+            $arr[8]['ans'] = $request['a9'];
+        }
+
+        if(!empty($request['q10'])) {
+            $arr[9]['id'] = $request['q10'];
+            $arr[9]['question'] = getQuestionName($request['q10']);
+            $arr[9]['ans'] = $request['a10'];
+        }
+
+        if (!blank($arr)) {
+            foreach ($arr as $val) {
+                if(!blank($val['ans'])) {
+                    UserQuestion::create([
+                        'student_id' => Auth::user()->id,
+                        'question_id' =>  $val['id'],
+                        'question' => $val['question'],
+                        'ans' => $val['ans'],
+                        'created_by' => Auth::user()->id,
+                    ]);
+                }
+            }
+        }
     }
 }
