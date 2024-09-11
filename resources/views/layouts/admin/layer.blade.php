@@ -146,7 +146,7 @@
         <div class="app-menu navbar-menu">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-               
+
                 <!-- <a href="index-2.html" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="assets/images/logo-sm.png" alt="" height="22">
@@ -154,7 +154,7 @@
                     <span class="logo-lg">
                         <img src="assets/images/logo-dark.png" alt="" height="17">
                     </span>
-                </a> 
+                </a>
                 <a href="index-2.html" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="assets/images/logo-sm.png" alt="" height="22">
@@ -168,13 +168,13 @@
                     <i class="ri-record-circle-line"></i>
                 </button> -->
             </div>
-            
+
             @if (Auth::user()->id == 57)
                 <div id="scrollbar">
                     <div class="container-fluid">
                         <div id="two-column-menu">
                         </div>
-                        
+
                         <ul class="navbar-nav" id="navbar-nav">
                             <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                             <li class="nav-item">
@@ -183,23 +183,47 @@
                                 </a>
                             </li>
                             <!-- end Dashboard Menu -->
-                            
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{ url('admin/course/course-preview') }}">
                                     <i class="ri-honour-line"></i> <span data-key="t-widgets">Course Preview</span>
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{ url('admin/question/exam-show') }}">
                                     <i class="ri-honour-line"></i> <span data-key="t-widgets">Manage Exams</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="{{ url('admin/payment/show') }}">
+                                    <i class="ri-honour-line"></i> <span data-key="t-widgets">Payment List</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="#userPages" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="userPages">
+                                    <i class="ri-pages-line"></i> <span data-key="t-pages">User List</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="userPages">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{ url('admin/student-show') }}" class="nav-link"
+                                                data-key="t-starter"> Student
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('admin/report') }}" class="nav-link" data-key="t-team">
+                                                Student Acitvity Report </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            @else     
-            
+            @else
+
             <div id="scrollbar">
                 <div class="container-fluid">
 
@@ -350,7 +374,7 @@
                 </div>
                 <!-- Sidebar -->
             </div>
-            
+
             @endif
 
             <div class="sidebar-background"></div>
@@ -455,7 +479,7 @@
             height: 612px;
             overflow: auto;
         }
-        
+
         #scrollbar{
             overflow: auto;
             height: 100vh;

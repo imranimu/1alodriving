@@ -3,7 +3,7 @@ Theme Name: Drive Safe Driving School
 Theme URI: https://s7template.com/tp-html/Drive Safe Driving School
 Author: s7template
 Author URI: https://s7template.com
-Description: Drive Safe Driving School 
+Description: Drive Safe Driving School
 Version: 1.0.0
 */
 /*--------------------------------------------------------------
@@ -761,7 +761,7 @@ ul {
   }
 }
 /*-----------------------------------------
-    ## video 
+    ## video
 ------------------------------------------*/
 .video-play-btn {
   border-radius: 50%;
@@ -800,7 +800,7 @@ ul {
 }
 
 /*-----------------------------------------
-    ## Breadcumb 
+    ## Breadcumb
 ------------------------------------------*/
 .breadcrumb-area {
   padding: 250px 0 112px;
@@ -1223,7 +1223,7 @@ ul {
 }
 
 /*----------------------------------------------
-    # Nav bar 
+    # Nav bar
 ----------------------------------------------*/
 .navbar-top {
   padding: 13px 0 4px 0;
@@ -2355,7 +2355,7 @@ ul {
   visibility: visible;
   opacity: 0.97;
 }
- 
+
 
 .mfp-zoom-in .mfp-content {
   opacity: 0;
@@ -2570,7 +2570,7 @@ ul {
   padding: 250px 0 170px 0;
   background-repeat: no-repeat;
   background-position: right;
-  background-position: right 135px;
+  background-position: right 111px;
 }
 
 .banner-area-2 {
@@ -2992,7 +2992,7 @@ ul {
 }
 .testimonial-slider .owl-dots {
   text-align: center;
-} 
+}
 
 /************ subscribe-area-inner ************/
 .subscribe-area-inner {
@@ -4345,7 +4345,7 @@ ul {
     animation: shiny-btn1 1.9s ease-in-out infinite;
 }
 
-.zoom-in-zoom-out { 
+.zoom-in-zoom-out {
     animation: zoom-in-zoom-out 2s ease-out infinite;
     display: inline-block;
 }

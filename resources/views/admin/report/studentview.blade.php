@@ -43,6 +43,95 @@
     <!-- end page title -->
 
     <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Course Status</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    @php
+                        $completedLesson = getAdminLastCourseLessonCompleted(9, $student_id);
+
+                        if(isset($completedLesson->module_status)){
+                            $module_status = $completedLesson->module_status;
+                        }else{
+                            $module_status = 0;
+                        }
+
+                        if (isset($completedLesson->complete_lession)) {
+                            $TotalCompleted = array_map('intval', explode(',', trim($completedLesson->complete_lession, '[]')));
+                        }else{
+                            $TotalCompleted = array();
+                        }
+
+                        $CompletedCount = count($TotalCompleted);
+                    @endphp
+
+                    <ul class="text-left ModuleView">
+                        @foreach (getCoursesModules() as $Module)
+                            @php
+                                $getResult = adminGetCourseLessonPercentage(9, $Module->id, $student_id);
+
+                                // Set the class based on the $getResult value
+                                $moduleClass = '';
+                                if ($getResult >= 100) {
+                                    $moduleClass = 'complete';
+                                } elseif ($getResult > 0 && $getResult < 100) {
+                                    $moduleClass = 'active';
+                                }
+                            @endphp
+                            <li class="{{ $moduleClass }}">
+                                <p style="position: relative; margin: 0px; z-index: 99; font-weight: bold;">
+                                    @if($getResult >= 100)
+                                        <i class="fa fa-unlock"></i>
+                                    @elseif($getResult > 0)
+                                        <i class="fa fa-spinner"></i>
+                                    @else
+                                        <i class="fa fa-lock"></i>
+                                    @endif
+                                    {{ $Module->name }}
+
+                                    @php
+                                        $getLessions = getCourseLession(9, $Module->id);
+
+                                        $ids = [];
+                                        foreach ($getLessions as $item) {
+                                            $ids[] = $item['module_id'];
+                                        }
+
+                                        $TotalLession = count($ids);
+
+                                        echo '<span class="LessonCount">'  .$TotalLession. ' Pages</span>';
+
+                                    @endphp
+                                </p>
+                                <span style="width: {{ $getResult }}% " class="LessonProgress"></span>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1"><i class="ri-question-line" style="position: relative; top: 2px;"></i> Security Questions</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+
+                    <ul style="list-style-type: none; padding-left: 15px;">
+                        @foreach ($getAllQuestion as  $key => $val)
+                            <li class="mb-2">{{ $key+1 }}. {{ $val->question }} </br> Ans: {{ $val->ans }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
@@ -106,3 +195,99 @@
     </div>
 
 @endsection
+
+<style>
+    .ModuleView{
+        list-style: none;
+        padding: 0px;
+    }
+    .ModuleView li{
+        border: 1px solid #ccc;
+        background: #f1f1f1;
+        padding: 7px 14px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .ModuleView li:last-child{
+        margin-bottom: 0px;
+    }
+    .ModuleView li.complete {
+        background: rgb(200 242 200);
+        border: 1px solid rgb(157 237 157);
+    }
+    .ModuleView li.active{
+        background: #EFC45C;
+    }
+
+    .ModuleView li span.LessonProgress {
+        width: 0%;
+        background: rgb(200 242 200);
+        position: absolute;
+        height: 100%;
+        left: 0;
+        bottom: 0;
+        border-radius: 10px;
+        z-index: 1;
+    }
+
+    .ModuleView li span.LessonCount{
+        float: right;
+    }
+
+    .progressBar {
+        width: 100%;
+        height: 30px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .progressBar .progress {
+        width: 0;
+        height: 100%;
+        background-color: #4CAF50;
+        transition: width 0.5s ease-in-out;
+    }
+
+    .ModuleView li i.fa-spinner{
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes  spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .glightbox_video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+    }
+
+    .outer_circle {
+      stroke-width: 3;
+      stroke-dasharray: 410;
+       stroke-dashoffset: 0;
+      stroke-linecap: square;
+      transition: all .4s ease-out;
+    }
+
+    .glightbox_video:hover .outer_circle {
+    stroke-dashoffset:410;
+      transition: stroke .7s .4s ease-out, stroke-dashoffset .4s ease-out
+    }
+
+    .glightbox_video:hover
+    .inner-circle {
+      fill: #BF2428;
+      transition:fill .4s .3s ease-out;
+    }
+
+    .glightbox_video:hover
+    .play{
+        fill: white;
+      transition:fill .4s .3s ease-out;
+    }
+</style>

@@ -99,8 +99,8 @@ if (!function_exists('getCoursePercetage')) {
     }
 }
 
-if (!function_exists('getCourseLessionPercetage')) { 
-    
+if (!function_exists('getCourseLessionPercetage')) {
+
     function getCourseLessionPercetage($course_id, $module_id)
     {
         $moduleHistory = App\Models\admin\CourseModuleHistorie::selectRaw('course_module_histories.courses_id, course_module_histories.module_id, course_module_histories.total_lession, course_module_histories.complete_lession, course_module_histories.examination_status, course_module_histories.status, course_module_histories.created_at, course_module_histories.module_status, courses_modules.name')
@@ -109,29 +109,65 @@ if (!function_exists('getCourseLessionPercetage')) {
                 $q->on('course_module_histories.module_id', 'courses_modules.id');
             })
             ->first();
-    
+
         if (!$moduleHistory) {
             return 0; // Handle case where module history is not found
         }
-    
+
         $totalLessons = isset($moduleHistory->total_lession) ? $moduleHistory->total_lession : 0;
         $completedLessons = isset($moduleHistory->complete_lession) ? count(json_decode($moduleHistory->complete_lession)) : 0;
-    
+
         if ($totalLessons === 0) {
             return 0; // Avoid division by zero
         }
-    
-        $percentage = ($completedLessons / $totalLessons) * 100; 
-        
+
+        $percentage = ($completedLessons / $totalLessons) * 100;
+
         if($percentage > 100){
             $percentage = 100;
         }else{
             $percentage = number_format($percentage, 2);
-        } 
-        
+        }
+
         return $percentage;
     }
 }
+
+if (!function_exists('adminGetCourseLessonPercentage')) {
+    function adminGetCourseLessonPercentage($course_id, $module_id, $student_id)
+    {
+        $moduleHistory = App\Models\admin\CourseModuleHistorie::selectRaw('course_module_histories.courses_id, course_module_histories.module_id, course_module_histories.total_lession, course_module_histories.complete_lession, course_module_histories.examination_status, course_module_histories.status, course_module_histories.created_at, course_module_histories.module_status, courses_modules.name')
+            ->where([
+                'course_module_histories.courses_id' => $course_id,
+                'course_module_histories.module_id' => $module_id,
+                'course_module_histories.status' => '1',
+                'course_module_histories.created_by' => $student_id // Use student_id to filter
+            ])
+            ->leftJoin('courses_modules', function ($q) {
+                $q->on('course_module_histories.module_id', '=', 'courses_modules.id');
+            })
+            ->first();
+
+        if (!$moduleHistory) {
+            return 0; // Handle case where module history is not found
+        }
+
+        $totalLessons = isset($moduleHistory->total_lession) ? $moduleHistory->total_lession : 0;
+        $completedLessons = isset($moduleHistory->complete_lession) ? count(json_decode($moduleHistory->complete_lession)) : 0;
+
+        if ($totalLessons === 0) {
+            return 0; // Avoid division by zero
+        }
+
+        $percentage = ($completedLessons / $totalLessons) * 100;
+
+        // Ensure percentage doesn't exceed 100 and format it
+        $percentage = $percentage > 100 ? 100 : number_format($percentage, 2);
+
+        return $percentage;
+    }
+}
+
 
 // if (!function_exists('getCoursePercetage')) {
     // function getCoursePercetage($course_id)
@@ -488,25 +524,25 @@ if (!function_exists('getExamStart')) {
     {
         // return $course_id;
         $getPreviousExam = App\Models\admin\StudentExam::where(['status' => '1', 'courses_id' => $course_id, 'student_id' => Auth::user()->id])->where('id', '<', $id)->orderBy('id', 'desc')->limit(1)->first();
-        
+
         //return  $getPreviousExam;
-        
+
         $status = false;
-        
+
         if (!blank($getPreviousExam)) {
             // return $id;
             $getCurrentExam = App\Models\admin\StudentExam::where(['status' => '1', 'courses_id' => $course_id, 'student_id' => Auth::user()->id])->where('id', '>', $getPreviousExam->id)->orderBy('id')->first();
-            
+
             //return $getCurrentExam;
-            
+
             if (!blank($getCurrentExam)) {
-                
+
                 if (($getCurrentExam->exam_status == '0' || $getCurrentExam->exam_status == '3' || $getCurrentExam->exam_status == '1') && $getCurrentExam->completed_at == null) {
                     //$addOnDay = date('Y-m-d', strtotime($getPreviousExam->completed_at . ' +1 day'));
                     //if (date('Y-m-d') >= $addOnDay) {
                     //    $status = true;
                     //}
-                    
+
                     if($getPreviousExam->exam_status == '2') {
                         $status = true;
                     }else{
@@ -514,12 +550,12 @@ if (!function_exists('getExamStart')) {
                     }
                 }
             }
-        } else { 
-            
+        } else {
+
             $getCurrentExam = App\Models\admin\StudentExam::where(['status' => '1', 'courses_id' => $course_id, 'student_id' => Auth::user()->id])->where('id', $id)->orderBy('id')->first();
-            
+
             //return  $getCurrentExam;
-            
+
             if ($getCurrentExam->exam_status != '2' && $getCurrentExam->completed_at == "") {
                 $status = true;
             }
@@ -658,51 +694,69 @@ if (!function_exists('getLastCourseLessionCompleted')) {
     }
 }
 
+if (!function_exists('getAdminLastCourseLessonCompleted')) {
+    function getAdminLastCourseLessonCompleted($course_id, $student_id)
+    {
+        $getLastLessonStatus = App\Models\admin\CourseModuleHistorie::where([
+            'status' => '1',
+            'courses_id' => $course_id,
+            'created_by' => $student_id
+        ])->limit(1)->orderBy('id', 'desc')->first();
+
+        if (!empty($getLastLessonStatus)) {
+            return $getLastLessonStatus;
+        }
+
+        return null; // Return null if no result is found
+    }
+}
+
+
 if (!function_exists('getNextModule')) {
     function getNextModule($course_id, $module_id)
     {
-         
-        
+
+
         // $current_module = DB::table('courses_modules')
         // ->where('id', $module_id)
         // ->where('courses_id', $course_id)
         // ->first();
-        
+
         // return $current_module;
-        
+
         $nextModule = DB::table('courses_modules')
         ->where('courses_id', $course_id)
         ->where('id', '>', $module_id)
         ->orderBy('id', 'asc')
         ->first();
-        
+
         if ($nextModule) {
             // Process the next module
-            
-            $getLesson = getCourseLession($course_id, $nextModule->id);  
-            
-            //return $getLesson[0]->id; 
-            
+
+            $getLesson = getCourseLession($course_id, $nextModule->id);
+
+            //return $getLesson[0]->id;
+
             return [
                 'course_id' => $course_id,
                 'module_id' => $nextModule->id,
                 'lesson_id' => $getLesson[0]->id
             ];
-            
+
         } else {
             // No next module found
             return 'All Completed';
         }
-        
-         
-    } 
+
+
+    }
 }
 
-if(!function_exists('getReviewLesson')){ 
+if(!function_exists('getReviewLesson')){
     function getReviewLesson($course_id, $module_id)
     {
         $getCourseLession = App\Models\admin\CourseLesson::where(['status' => '1', 'course_id' => $course_id, 'module_id' => $module_id])->get();
-        
+
         if ($getCourseLession->count() >= 2) {
             // Get the second to last item
             $secondLastLesson = $getCourseLession->slice(-2, 1)->first();
@@ -710,9 +764,22 @@ if(!function_exists('getReviewLesson')){
             // Handle the case where there are not enough items
             $secondLastLesson = null;
         }
-    
+
         if (!empty($secondLastLesson)) :
             return $secondLastLesson;
+        endif;
+    }
+}
+
+if(!function_exists('questionAnswer')){
+    function questionAnswer($student_id)
+    {
+        // $getQuestion = App\Models\admin\UserQuestion::where(['status' => '1', 'student_id' => $student_id])->first();
+
+        $getQuestion = App\Models\admin\UserQuestion::where(['status' => '1', 'student_id' => $student_id])->get();
+
+        if (!empty($getQuestion)) :
+            return $getQuestion;
         endif;
     }
 }

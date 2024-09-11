@@ -21,14 +21,14 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
-                    <div class="successWrap">  
-                        <a class="glightbox_video" href="{{ url('student/course-lists') }}" style="
+                    <div class="successWrap text-center">
+                        <a class="btn btn-warning mb-4" href="{{ url('/student/modify-address') }}">Please Update Your Profile</a>
+                        {{-- <a class="glightbox_video" href="{{ url('student/course-lists') }}" style="
 "><svg width="131" height="131" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path class="inner-circle" d="M65 21C40.1488 21 20 41.1488 20 66C20 90.8512 40.1488 111 65 111C89.8512 111 110 90.8512 110 66C110 41.1488 89.8512 21 65 21Z" fill="#EFC45C"></path>
                                             <circle class="outer_circle" cx="65.5" cy="65.5" r="64" stroke="#EFC45C"></circle>
                                             <text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">START</text>
-                                        </svg></a>
-                    
+                                        </svg></a> --}}
                         <!-- Content Start -->
                         <table cellpadding="0" cellspacing="0" cols="1" bgcolor="#d7d7d7" align="center">
                             <tr bgcolor="#d7d7d7">
@@ -203,7 +203,7 @@
                         </table>
                         <!-- Content End -->
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -221,23 +221,23 @@
             transform: translate(-50%, -50%);
             top: 14%;
             z-index: 999999;
-        } 
+        }
         .outer_circle {
           stroke-width: 3;
-          stroke-dasharray: 410; 
+          stroke-dasharray: 410;
            stroke-dashoffset: 0;
           stroke-linecap: square;
           transition: all .4s ease-out;
-        } 
+        }
         .glightbox_video:hover .outer_circle {
         stroke-dashoffset:410;
           transition: stroke .7s .4s ease-out, stroke-dashoffset .4s ease-out
-        } 
-        .glightbox_video:hover 
+        }
+        .glightbox_video:hover
         .inner-circle {
           fill: #BF2428;
           transition:fill .4s .3s ease-out;
-        } 
+        }
         .glightbox_video:hover
         .play{
             fill: white;
