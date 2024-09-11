@@ -74,16 +74,16 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'first_name' => 'required',
-            'mobile_no' => 'required',
-            'dob' => 'required',
-            'gender' => 'required',
-            'address1' => 'required',
-            'postcode' => 'required',
-            'city_town' => 'required',
-            'country' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'first_name' => 'required',
+        //     'mobile_no' => 'required',
+        //     'dob' => 'required',
+        //     'gender' => 'required',
+        //     'address1' => 'required',
+        //     'postcode' => 'required',
+        //     'city_town' => 'required',
+        //     'country' => 'required',
+        // ]);
 
         try {
             $update = [
