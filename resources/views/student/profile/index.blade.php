@@ -63,19 +63,26 @@
                         <div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <!-- Message here -->
-                                @if (!empty(Session::get('message')) && isset(Session::get('message')['status']) == '1')
-                                    <div class="form-group row">
-                                        <div class="alert alert-success inline">
-                                            {{ Session::get('message')['text'] }}
+                                @if (Session::has('message'))
+                                    @php
+                                        $message = Session::get('message');
+                                    @endphp
+
+                                    @if (isset($message['status']) && $message['status'] == '1')
+                                        <div class="form-group row">
+                                            <div class="alert alert-success inline">
+                                                {{ $message['text'] }}
+                                            </div>
                                         </div>
-                                    </div>
-                                @elseif (!empty(Session::get('message')) && isset(Session::get('message')['status']) == '0')
-                                    <div class="form-group row">
-                                        <div class="alert alert-danger inline">
-                                            {{ Session::get('message')['text'] }}
+                                    @elseif (isset($message['status']) && $message['status'] == '0')
+                                        <div class="form-group row">
+                                            <div class="alert alert-danger inline">
+                                                {{ $message['text'] }}
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endif
+
                                 <form action="{{ url($action_url) }}" id="modifyAddress" name="modifyAddress"
                                     method="post">
                                     @csrf

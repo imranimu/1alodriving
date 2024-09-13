@@ -784,3 +784,14 @@ if(!function_exists('questionAnswer')){
     }
 }
 
+if (!function_exists('securityQustionAnwerCount')) {
+    function securityQustionAnwerCount()
+    {
+        $getAnswer = App\Models\admin\UserQuestion::where('student_id', Auth::user()->id)->get();
+
+        $AnsCount = $getAnswer->count();
+
+        return $AnsCount;
+    }
+}
+
