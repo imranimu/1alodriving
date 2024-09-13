@@ -132,11 +132,11 @@
             </div>
         </div>
 
-        <div class="col-xl-12">
+        {{-- <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Student Report</h4>
-                </div><!-- end card header -->
+                </div>
 
                 <div class="card-body">
 
@@ -188,9 +188,9 @@
                     </div>
 
 
-                </div><!-- end card-body -->
-            </div><!-- end card -->
-        </div>
+                </div>
+            </div>
+        </div> --}}
         <!-- end col -->
     </div>
 
