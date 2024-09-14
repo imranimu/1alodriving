@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Auth;
+use App\Models\admin\StudentExam;
 
 if (!function_exists('getSettings')) {
     function getSettings()
@@ -795,3 +796,28 @@ if (!function_exists('securityQustionAnwerCount')) {
     }
 }
 
+if(!function_exists('getStudentExams')){
+    function getStudentExams($student_id)
+    {
+        $sql = StudentExam::selectRaw('student_exams.id, student_exams.student_id, student_exams.exam_id, student_exams.exam_status, student_exams.status, exam_masters.module_id, exam_masters.title, courses.title as courses_name, courses_modules.name as module_name, student_exams.exam_percentage, student_exams.completed_at, student_exams.courses_id')
+            ->where('student_id', $student_id)
+            ->leftjoin('exam_masters', function ($q) {
+                $q->on('student_exams.exam_id', 'exam_masters.id');
+            })
+            ->leftjoin('courses', function ($q) {
+                $q->on('exam_masters.courses_id', 'courses.id');
+            })
+            ->leftjoin('courses_modules', function ($q) {
+                $q->on('exam_masters.module_id', 'courses_modules.id');
+            })
+            ->orderBy('id', 'asc');
+
+        $perPage = 40;
+
+        $records = $sql->paginate($perPage);
+
+        return $records;
+
+        //return view('student.question.exam_lists', compact('lists', 'serial', 'records'));
+    }
+}

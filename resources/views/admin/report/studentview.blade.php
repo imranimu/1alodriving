@@ -132,6 +132,78 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+            <table class="table table-bordered datatable">
+                <thead>
+                    <tr>
+                        <th scope="col">#SL</th>
+                        <th scope="col">Exam Title</th>
+                        <th scope="col">Courses Name</th>
+                        <th scope="col">Module</th>
+                        <th scope="col">Exam Status</th>
+                        <th scope="col">Exam Percentage</th>
+                        {{-- <th scope="col">Result</th>
+                        <th scope="col">Action</th> --}}
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                       $records = getStudentExams($student_id);
+                    @endphp
+                    @if (!blank($records))
+                        @php $count = 1; @endphp
+                        @foreach ($records as $val)
+
+                            @php
+                              // echo  getExamStart($val->id, $val->courses_id)
+                            @endphp
+
+                            <tr>
+                                <td>{{ $count }}</td>
+                                <td>{{ $val->title }}</td>
+                                <td>{{ $val->courses_name }}</td>
+                                <td>{{ $val->module_name }}</td>
+                                <td>{{ $val->exam_status == '2' ? 'Finished' : 'Pending' }}</td>
+                                <td>{{ $val->exam_percentage }}%</td>
+                                {{-- <td>
+                                    @if ($val->exam_status == '2')
+                                       <a href="{{ url('/admin/view-result/' . $val->exam_id) }}"
+                                            class="badge badge-success">View
+                                            Result</a>
+                                    @elseif ($val->exam_status == '1')
+                                        <a href="{{ url('/admin/view-result/' . $val->exam_id) }}"
+                                            class="badge badge-danger">View
+                                            Result</a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($val->exam_status == '2' && $val->completed_at != '')
+                                        -
+                                    @else
+                                        @if (getExamStart($val->id, $val->courses_id))
+                                            <a href="{{ url('student/join-exam/' . $val->exam_id) }}"
+                                                class="btn btn-primary btn-sm">
+                                                {{ $val->exam_status == '1' || $val->exam_status == '3' ? 'Retake' : 'Start Exam' }}
+                                            </a>
+                                        @else
+                                            <label disabled>Exam Processing</label>
+                                        @endif
+                                    @endif
+                                </td> --}}
+                            </tr>
+                            @php $count++; @endphp
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="8">No Courses Exam Found!</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
         {{-- <div class="col-xl-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
