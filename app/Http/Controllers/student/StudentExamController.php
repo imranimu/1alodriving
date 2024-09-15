@@ -32,7 +32,7 @@ class StudentExamController extends Controller
             })
             ->orderBy('id', 'asc');
         $lists = 1;
-        $perPage = 10;
+        $perPage = 40;
         $records = $sql->paginate($perPage);
         $serial = (!empty($input['page'])) ? (($perPage * ($input['page'] - 1)) + 1) : 1;
         return view('student.question.exam_lists', compact('lists', 'serial', 'records'));

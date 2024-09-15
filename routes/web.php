@@ -113,6 +113,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::post('/course/store-course-lesson', [CourseController::class, 'store_course_lesson'])->name('course.store-course-lesson');
     Route::post('/course/{id}/update-course-lesson', [CourseController::class, 'update_course_lesson']);
 
+    Route::get('/view-result/{student_id}/{id}', [CourseController::class, 'view_result'])->name('view-result.{ student_id}.{id}');
+
 	//payment list
     Route::get('/payment/show', [CourseController::class, 'payment_show'])->name('payment.show');
     Route::post('/payment/get-addons-history', [CourseController::class, 'get_addons_history'])->name('payment.get-addons-history');

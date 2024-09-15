@@ -464,7 +464,7 @@ class CourseController extends Controller
             endif;
         endif;
     }
-	
+
 	public function payment_show(Request $request)
     {
         $sql = CoursePurchase::with('get_user', 'get_course', 'get_addons')->orderBy('id', 'desc');
@@ -497,7 +497,7 @@ class CourseController extends Controller
             }
         }
     }
-	
+
     public function course_module_add(Request $request, $id)
     {
         $sql = CoursesModule::where('courses_id', $id)->orderBy('id', 'asc');
@@ -659,7 +659,7 @@ class CourseController extends Controller
     //         'status' => true
     //     ]);
     // }
-	
+
 	public function course_preview(Request $request)
     {
         $sql = Course::selectRaw('courses.id, courses.slug, courses.course_level, courses.course_duration, courses.price, courses.status, courses.created_at, courses.title, courses.image, courses_modules.id as module_id')
@@ -775,5 +775,10 @@ class CourseController extends Controller
     {
         $next_record = CourseLesson::where(['course_id' => $request->courses_id, 'module_id' => $request->module_id, 'status' => '1'])->orderBy('id')->first();
         return redirect('admin/course/preview/' . $request->courses_id . '/' . $request->module_id . '/' . $next_record->id . '/2');
+    }
+
+    public function view_result($id, $student_id)
+    {
+        return view('admin/report/view_result', compact('id', 'student_id'));
     }
 }
