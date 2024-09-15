@@ -33,7 +33,7 @@
                             </div>
                         @endif
                     </div>
-                    <h4 class="mb-3">Regestration: </h4>
+                    <h4 class="mb-3">Registration </h4>
                     <hr class="separator-aqua">
 
                     <form class="needs-validation" action="{{ route('student.course-payment-validation') }}"

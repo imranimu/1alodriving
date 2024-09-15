@@ -10,9 +10,6 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                     <div class="wrap wrap-content">
-                        
-                        
-                        
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -29,12 +26,12 @@
                             <tbody>
                                 @if (!blank($records))
                                     @php $count = 1; @endphp
-                                    @foreach ($records as $val) 
-                                        
+                                    @foreach ($records as $val)
+
                                         @php
                                           // echo  getExamStart($val->id, $val->courses_id)
                                         @endphp
-                                    
+
                                         <tr>
                                             <td>{{ $count }}</td>
                                             <td>{{ $val->title }}</td>
@@ -47,7 +44,7 @@
                                                    <a href="{{ url('/student/view-result/' . $val->exam_id) }}"
                                                         class="badge badge-success">View
                                                         Result</a>
-												@elseif ($val->exam_status == '1')		
+												@elseif ($val->exam_status == '1')
 													<a href="{{ url('/student/view-result/' . $val->exam_id) }}"
                                                         class="badge badge-danger">View
                                                         Result</a>
@@ -55,7 +52,7 @@
                                                     -
                                                 @endif
                                             </td>
-                                            <td> 
+                                            <td>
                                                 @if ($val->exam_status == '2' && $val->completed_at != '')
                                                     -
                                                 @else
