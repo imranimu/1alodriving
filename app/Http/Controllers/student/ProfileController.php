@@ -88,6 +88,7 @@ class ProfileController extends Controller
         try {
             $update = [
                 'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 'mobile_no' => $request->mobile_no,
                 'address1' => $request->address1,
