@@ -102,6 +102,19 @@
 
                                     <div class="form-group row">
                                         <div class="col-sm-3 col-form-label">
+                                            <label>Middle Name</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="middle_name" class="form-control" id="middle_name"
+                                                placeholder="Middle Name"
+                                                value="{{ old('middle_name') != '' ? old('middle_name') : Auth::user()->middle_name }}">
+                                            @if ($errors->has('middle_name'))
+                                                <strong>{{ $errors->first('middle_name') }}</strong>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
                                             <label>Last Name </label>
                                         </div>
                                         <div class="col-sm-9">
@@ -174,9 +187,49 @@
                                             <label>Address *</label>
                                         </div>
                                         <div class="col-sm-9">
-                                            <textarea name="address1" id="address1" cols="30" class="form-control" rows="4" placeholder="Address">{{ old('address1') != '' ? old('address1') : Auth::user()->address1 }}</textarea>
+                                            <textarea name="address1" id="address1" cols="30" class="form-control" rows="2" placeholder="Street Name & Number">{{ old('address1') != '' ? old('address1') : Auth::user()->address1 }}</textarea>
                                             @if ($errors->has('address1'))
                                                 <strong>{{ $errors->first('address1') }}</strong>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>City *</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="city_town" class="form-control" id="city_town"
+                                                placeholder="City"
+                                                value="{{ old('city_town') != '' ? old('city_town') : Auth::user()->city_town }}">
+                                            @if ($errors->has('city_town'))
+                                                <strong>{{ $errors->first('city_town') }}</strong>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 col-form-label">
+                                            <label>State *</label>
+                                        </div>
+                                        <div class="col-sm-9">
+
+                                            <input type="text" name="country" class="form-control" id="country"
+                                                placeholder="State"
+                                                value="{{ old('country') != '' ? old('country') : Auth::user()->country }}">
+
+                                            <!--<select class="form-control" name="country" id="country">-->
+                                            <!--    <option value="">---select country---</option>-->
+                                            <!--    @if (!blank(getCountry()))-->
+                                            <!--        @foreach (getCountry() as $key => $val)-->
+                                            <!--            <option value="{{ $key }}"-->
+                                            <!--                {{ ((old('country') == $key ? 'selected' : $key == Auth::user()->country) ? 'selected' : $key == 'US') ? 'selected' : '' }}>-->
+                                            <!--                {{ $val }}</option>-->
+                                            <!--        @endforeach-->
+                                            <!--    @endif-->
+                                            <!--</select>-->
+                                            @if ($errors->has('country'))
+                                                <strong>{{ $errors->first('country') }}</strong>
                                             @endif
                                         </div>
                                     </div>
@@ -207,46 +260,9 @@
 
                                     </div>
 
-                                    <div class="form-group row">
-                                        <div class="col-sm-3 col-form-label">
-                                            <label>City *</label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="city_town" class="form-control" id="city_town"
-                                                placeholder="City"
-                                                value="{{ old('city_town') != '' ? old('city_town') : Auth::user()->city_town }}">
-                                            @if ($errors->has('city_town'))
-                                                <strong>{{ $errors->first('city_town') }}</strong>
-                                            @endif
-                                        </div>
 
-                                    </div>
 
-                                    <div class="form-group row">
-                                        <div class="col-sm-3 col-form-label">
-                                            <label>State *</label>
-                                        </div>
-                                        <div class="col-sm-9">
 
-                                            <input type="text" name="country" class="form-control" id="country"
-                                                placeholder="State"
-                                                value="{{ old('country') != '' ? old('country') : Auth::user()->country }}">
-
-                                            <!--<select class="form-control" name="country" id="country">-->
-                                            <!--    <option value="">---select country---</option>-->
-                                            <!--    @if (!blank(getCountry()))-->
-                                            <!--        @foreach (getCountry() as $key => $val)-->
-                                            <!--            <option value="{{ $key }}"-->
-                                            <!--                {{ ((old('country') == $key ? 'selected' : $key == Auth::user()->country) ? 'selected' : $key == 'US') ? 'selected' : '' }}>-->
-                                            <!--                {{ $val }}</option>-->
-                                            <!--        @endforeach-->
-                                            <!--    @endif-->
-                                            <!--</select>-->
-                                            @if ($errors->has('country'))
-                                                <strong>{{ $errors->first('country') }}</strong>
-                                            @endif
-                                        </div>
-                                    </div>
 
                                     @if (!blank($filteredSecurityQuestions))
                                     <h4 class="mb-3">Security Question</h4>
@@ -366,7 +382,7 @@
     </style>
 	<script>
         $('#datepicker').datepicker({
-            format: 'mm-dd-yyyy',
+            format: 'yyyy-mm-dd',
         });
     </script>
 @endsection

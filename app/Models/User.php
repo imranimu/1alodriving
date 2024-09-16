@@ -21,6 +21,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'mobile_no',
@@ -61,7 +62,7 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-	
+
 	/**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTIdentifier() {
         return $this->getKey();
     }
-	
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
