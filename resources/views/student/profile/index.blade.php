@@ -332,6 +332,10 @@
 
                                     </div>
 
+                                    @else
+
+
+
                                     @endif
 
 
@@ -347,6 +351,12 @@
                                                 class="btn btn-primary btn-block custom-checkout"
                                                 value="Save Information">
                                         </div>
+
+                                        @if (blank($filteredSecurityQuestions))
+                                        <div class="col-sm-3">
+                                            <a class="btn btn-success btn-block custom-checkout" href="{{ url('student/course-lists') }}">Go To Course</a>
+                                        </div>
+                                        @endif
 
                                     </div>
 
