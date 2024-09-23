@@ -49,6 +49,15 @@
                                     <strong>{{ $errors->first('first_name') }}</strong>
                                 @endif
                             </div>
+                            <div class="col-md-6">
+                                <label for="mobile_no" class="form-label mb-2">Mobile Number</label>
+                                <input type="text" id="mobile_no" class="form-control mb-3"
+                                    placeholder="Enter Mobile Number" name="mobile_no" value="{{ old('mobile_no') }}"
+                                    required="">
+                                @if ($errors->has('mobile_no'))
+                                    <strong>{{ $errors->first('mobile_no') }}</strong>
+                                @endif
+                            </div>
                             {{-- <div class="col-md-4">
                                 <label for="middle_name" class="form-label mb-2">Middle name</label>
                                 <input type="text" id="middle_name" class="form-control mb-3"
@@ -68,22 +77,23 @@
                             </div> --}}
                             <div class="col-md-6">
                                 <label for="student_email" class="form-label mb-2">Student Email</label>
-                                <input type="text" id="student_email" class="form-control mb-3"
+                                <input type="text" id="student_email" class="form-control"
                                     placeholder="Enter Student Email" name="student_email" value="{{ old('student_email') }}"
                                     onchange="studentEmailCheck(this.value)" required="">
-                                <span id="error"></span>
+                                <span class="mb-3 d-block" id="error" style="color: red; font-weight: bold;"></span>
                                 @if ($errors->has('student_email'))
-                                    <strong>{{ $errors->first('student_email') }}</strong>
+                                    <strong style="color: red; font-weight: bold;">{{ $errors->first('student_email') }}</strong>
                                 @endif
                             </div>
+
                             <div class="col-md-6">
-                                <label for="mobile_no" class="form-label mb-2">Mobile Number</label>
-                                <input type="text" id="mobile_no" class="form-control mb-3"
-                                    placeholder="Enter Mobile Number" name="mobile_no" value="{{ old('mobile_no') }}"
-                                    required="">
-                                <span id="error"></span>
-                                @if ($errors->has('mobile_no'))
-                                    <strong>{{ $errors->first('mobile_no') }}</strong>
+                                <label for="confirm_student_email" class="form-label mb-2">Confirm Email</label>
+                                <input type="text" id="confirm_student_email" class="form-control"
+                                    placeholder="Enter Student Email" name="confirm_student_email" value="{{ old('confirm_student_email') }}"
+                                    onchange="studentEmailCheck(this.value)" required="">
+                                <span class="mb-3 d-block" id="confirm_error" style="color: red; font-weight: bold;"></span>
+                                @if ($errors->has('confirm_student_email'))
+                                    <strong style="color: red; font-weight: bold;">{{ $errors->first('confirm_student_email') }}</strong>
                                 @endif
                             </div>
 
@@ -181,12 +191,23 @@
 
 							<div class="col-md-6">
                                 <label for="student_password" class="form-label mb-2">Student Password</label>
-                                <input type="password" id="student_password" class="form-control mb-3"
+                                <input type="password" id="student_password" class="form-control"
                                     placeholder="Student Password" name="student_password"
                                     value="{{ old('student_password') }}" minlength="6" maxlength="10" autocomplete="off" required="">
-                                <span id="error"></span>
+                                <span class="mb-3 d-block" id="password_error" style="color: red; font-weight: bold;"></span>
                                 @if ($errors->has('student_password'))
-                                    <strong>{{ $errors->first('student_password') }}</strong>
+                                    <strong style="color: red; font-weight: bold;">{{ $errors->first('student_password') }}</strong>
+                                @endif
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="confirm_student_password" class="form-label mb-2">Confirm Password</label>
+                                <input type="password" id="confirm_student_password" class="form-control mb-3"
+                                    placeholder="Confirm Password" name="confirm_student_password"
+                                    value="{{ old('confirm_student_password') }}" minlength="6" maxlength="10" autocomplete="off" required="">
+
+                                @if ($errors->has('confirm_student_password'))
+                                    <strong style="color: red; font-weight: bold;">{{ $errors->first('confirm_student_password') }}</strong>
                                 @endif
                             </div>
 
@@ -212,7 +233,7 @@
                                                 </option>
                                             </select>
                                             @if ($errors->has("question.q" . ($index + 1)))
-                                                <strong>The question-{{ $index + 1 }} field is required.</strong>
+                                                <strong style="color: red; font-weight: bold;">The question-{{ $index + 1 }} field is required.</strong>
                                             @endif
                                         </div>
 
@@ -220,7 +241,7 @@
                                             <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
                                             <span id="error"></span>
                                             @if ($errors->has("question.a" . ($index + 1)))
-                                                <strong>The Answer-{{ $index + 1 }} field is required.</strong>
+                                                <strong style="color: red; font-weight: bold;">The Answer-{{ $index + 1 }} field is required.</strong>
                                             @endif
                                         </div>
                                     @endforeach
@@ -241,7 +262,7 @@
                                                 </option>
                                             </select>
                                             @if ($errors->has("question.q" . ($index + 1)))
-                                                <strong>The question-{{ $index + 1 }} field is required.</strong>
+                                                <strong style="color: red; font-weight: bold;">The question-{{ $index + 1 }} field is required.</strong>
                                             @endif
                                         </div>
 
@@ -249,7 +270,7 @@
                                             <input type="text" id="question[a{{ $index + 1 }}]" name="question[a{{ $index + 1 }}]" class="form-control" placeholder="Answer" value="{{ old('question.a' . ($index + 1)) }}">
                                             <span id="error"></span>
                                             @if ($errors->has("question.a" . ($index + 1)))
-                                                <strong>The Answer-{{ $index + 1 }} field is required.</strong>
+                                                <strong style="color: red; font-weight: bold;">The Answer-{{ $index + 1 }} field is required.</strong>
                                             @endif
                                         </div>
                                     @endforeach
@@ -395,6 +416,61 @@
                 });
             }
         }
+
+        // Function to check if both emails match
+        function validateEmails() {
+
+            var email = $("#student_email").val();
+
+            var confirmEmail = $("#confirm_student_email").val();
+
+            // Clear any previous error messages
+            $("#confirm_error").text('');
+
+            if (email !== confirmEmail) {
+                $("#confirm_error").text("Emails do not match.");
+                return false;
+            } else {
+                $("#confirm_error").text('');
+                return true;
+            }
+        }
+
+        // Function to check if both passwords match
+        function validatePasswords() {
+            var password = $("#student_password").val();
+            var confirmPassword = $("#confirm_student_password").val();
+
+            // Clear any previous error messages
+            $("#password_error").text('');
+
+            if (password !== confirmPassword) {
+                $("#password_error").text("Passwords do not match.");
+                return false;
+            } else {
+                $("#password_error").text('');
+                return true;
+            }
+        }
+
+        // Check on change for both email and password fields
+        $("#student_email, #confirm_student_email").on('change', function() {
+            validateEmails();
+        });
+
+        $("#student_password, #confirm_student_password").on('change', function() {
+            validatePasswords();
+        });
+
+        // Check before form submission
+        $("form").on('submit', function(e) {
+            var emailValid = validateEmails();
+            var passwordValid = validatePasswords();
+
+            if (!emailValid || !passwordValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
     </script>
 
     <script>
