@@ -269,7 +269,7 @@
 
 
                                     <ul class="text-left ModuleView">
-                                        @foreach (getCoursesModules() as $Module)
+                                        @foreach (getCoursesModules($val->get_course->id) as $Module)
                                             @php
                                                 $getResult = getCourseLessionPercetage($val->get_course->id, $Module->id);
 

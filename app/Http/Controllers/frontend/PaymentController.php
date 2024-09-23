@@ -60,6 +60,7 @@ class PaymentController extends Controller
                 'title' => $getCourse['title'],
                 'price' => $getCourse['price'],
                 'first_name' => Auth::user()->first_name,
+                'middle_name' => Auth::user()->middle_name,
                 'last_name' => Auth::user()->last_name,
                 'student_email' => Auth::user()->email,
                 'mobile_no' => Auth::user()->mobile_no,
@@ -110,6 +111,7 @@ class PaymentController extends Controller
                 'price' => $getCourse['price'],
 				'student_password' => $request->student_password !="" ? $request->student_password : '',
                 'first_name' => Auth::user() != "" ? Auth::user()->first_name : $request->first_name,
+                'middle_name' => Auth::user() != "" ? Auth::user()->middle_name : $request->middle_name,
                 'last_name' => Auth::user() != "" ? Auth::user()->last_name : $request->last_name,
                 'student_email' => Auth::user() != "" ? Auth::user()->email : $request->student_email,
                 'mobile_no' =>  Auth::user() != "" ? Auth::user()->mobile_no : $request->mobile_no,
@@ -165,6 +167,7 @@ class PaymentController extends Controller
         if (blank(Auth::user())) {
             $arr = [
                 'first_name' => $getCourse['first_name'],
+                'middle_name' => $getCourse['middle_name'],
                 'last_name' => $getCourse['last_name'],
                 'email' => $getCourse['student_email'],
                 'mobile_no' => $getCourse['mobile_no'],

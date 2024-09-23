@@ -70,7 +70,7 @@
                     @endphp
 
                     <ul class="text-left ModuleView">
-                        @foreach (getCoursesModules() as $Module)
+                        @foreach (getCoursesModules(9) as $Module)
                             @php
                                 $getResult = adminGetCourseLessonPercentage(9, $Module->id, $student_id);
 

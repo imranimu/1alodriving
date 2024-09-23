@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
 
-                
+
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="contact-details myaccount-contact">
@@ -28,14 +28,14 @@
 
 
                     <div class="contact-details myaccount-contact">
-                        <h2><i class="fa fa-user"></i> Profile</h2>                         
+                        <h2><i class="fa fa-user"></i> Profile</h2>
 
-                        <a href="{{ url('student/modify-address')}}" class="btn btn-primary pull-right"><i class="fa fa-edit"></i>&nbsp;Edit</a>                 
+                        <a href="{{ url('student/modify-address')}}" class="btn btn-primary pull-right"><i class="fa fa-edit"></i>&nbsp;Edit</a>
                         <p><strong>Name: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</strong></p>
                         <p><strong>Email: {{ Auth::user()->email }}</strong></p>
-                        <p><strong>Mobile No: {{ Auth::user()->mobile_no}}</strong></p>                
-                        <p><strong>Joined At: {{ date("d-M-Y h:i:s", strtotime(Auth::user()->created_at)) }}</strong></p> 
-							
+                        <p><strong>Mobile No: {{ Auth::user()->mobile_no}}</strong></p>
+                        <p><strong>Joined At: {{ date("d-M-Y h:i:s", strtotime(Auth::user()->created_at)) }}</strong></p>
+
                     </div>
 
 
