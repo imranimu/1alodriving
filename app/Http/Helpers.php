@@ -583,9 +583,15 @@ if (!function_exists('getCoursesModuleCount')) {
 }
 
 if (!function_exists('getCoursesModules')) {
-    function getCoursesModules()
+    function getCoursesModules($courseId)
     {
-        $coursesModules = App\Models\admin\CoursesModule::where('status', '1')->whereNull('deleted_at')->get();
+        //$coursesModules = App\Models\admin\CoursesModule::where('status', '1')->whereNull('deleted_at')->get();
+
+        $coursesModules = App\Models\admin\CoursesModule::where('courses_id', $courseId)
+            ->where('status', '1')
+            ->whereNull('deleted_at')
+            ->get();
+
         return $coursesModules;
     }
 }
