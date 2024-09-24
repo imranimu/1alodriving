@@ -1,5 +1,5 @@
 @extends('layouts.auth.layer')
-@section('title', 'Reset Password | Drive Safe school')
+@section('title', 'Reset Password | 1-a alo driving school')
 @section('content')
 	<!-- breadcrumb start -->
     <!-- <div class="breadcrumb-area" style="background-image:url('{{ asset('assets/frontend/img/other/3.png') }}')">
@@ -16,7 +16,7 @@
         </div>
     </div> -->
     <!-- breadcrumb end -->
-	
+
 	<div class="signin-page-area pd-top-120 pd-bottom-120">
 		<div class="container">
 			<div class="row justify-content-center">
