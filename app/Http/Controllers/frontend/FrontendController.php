@@ -33,11 +33,13 @@ class FrontendController extends Controller
 
     public function courses(Request $request)
     {
-        $sql = Course::orderBy('id', 'desc');
-        if (!empty($request->q)) {
-            $sql->Where('title', 'LIKE', '%' . $request->q . '%')
-                ->orWhere('slug', 'LIKE', '%' . $request->q . '%');
-        }
+        // $sql = Course::orderBy('id', 'desc');
+        $sql = Course::where('status', '1')->orderBy('id', 'desc');
+
+        // if (!empty($request->q)) {
+        //     $sql->Where('title', 'LIKE', '%' . $request->q . '%')
+        //         ->orWhere('slug', 'LIKE', '%' . $request->q . '%');
+        // }
 
         $lists = 1;
         $perPage = 10;
@@ -397,10 +399,10 @@ class FrontendController extends Controller
         }
         return view('frontend.payment.failed', compact('paymentData'));
     }
-        
+
     public function faqs(Request $request)
     {
-        
+
         return view('frontend.faqs.faqs');
     }
 
