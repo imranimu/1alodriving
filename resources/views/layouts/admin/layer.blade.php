@@ -360,6 +360,23 @@
                             </div>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#RefferalPages" data-bs-toggle="collapse"
+                                role="button" aria-expanded="false" aria-controls="RefferalPages">
+                                <i class="ri-pages-line"></i> <span data-key="t-pages">Refferal</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="RefferalPages">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/referrals') }}" class="nav-link" data-key="t-starter">Refferal List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/referral/create') }}" class="nav-link" data-key="t-team">Add Refferal</a>
+                                    </li>
+                                </ul>`
+                            </div>
+                        </li>
+
                         <li class="menu-title"><i class="ri-more-fill"></i> <span
                                 data-key="t-components">Logout</span>
                         </li>

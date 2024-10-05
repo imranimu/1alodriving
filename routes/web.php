@@ -23,6 +23,7 @@ use App\Http\Controllers\student\StudentExamController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminReferralController;
 
 /*
 |--------------------------------------------------------------------------
@@ -191,6 +192,26 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::post('guide/edit', [GuidelineController::class, 'edit'])->name('guide.edit');
     Route::post('guide/update', [GuidelineController::class, 'update'])->name('guide.update');
     Route::post('guide/sort', [GuidelineController::class, 'sort'])->name('guide.sort');
+
+    // Referral Link
+//     Route::get('/referrals', [AdminReferralController::class, 'index'])->name('referrals.index');
+//     route::get('/referral/create', [AdminReferralController::class, 'create'])->name('referral.create');
+//     Route::post('/referral/store', [AdminReferralController::class, 'store'])->name('referral.store');
+
+//     // Route to show the referral creation form
+// Route::get('/admin/referral/create', [AdminReferralController::class, 'create'])->name('referral.create');
+
+// Route to show the referral creation form
+Route::get('/referral/create', [AdminReferralController::class, 'create'])->name('referral.create');
+
+// Route to handle the referral submission
+Route::post('/referral/store', [AdminReferralController::class, 'store'])->name('referral.store');
+
+// Route to show all referrals
+Route::get('/referrals', [AdminReferralController::class, 'index'])->name('referrals.index');
+
+// Route to handle the referral submission
+Route::post('/admin/referral/store', [AdminReferralController::class, 'store'])->name('referral.store');
 });
 
 Route::group(['as' => 'student.', 'prefix' => 'student', 'namespace' => 'student', 'middleware' => ['auth', 'student']], function () {
