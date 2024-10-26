@@ -94,23 +94,28 @@
 
                                             <td>{{ $val->created_at }}</td>
                                             <td>
+
                                                 @if ($userId != 57)
+
                                                 <a class="badge bg-info"
                                                     href="{{ url('admin/question/exam/' . $val->id . '/edit') }}"
                                                     data-toggle="tooltip" title="Edit">
                                                     <i class="ri-edit-2-line"></i>
                                                 </a>
+
                                                 <a class="badge bg-danger trash" href="javascript:void(0)"
                                                     onclick="examDelete({{ $val->id }})" data-toggle="tooltip"
                                                     title="Delete">
                                                     <i class="ri-delete-bin-line"></i>
                                                 </a>
+
+                                                @endif
+
                                                 <a class="badge bg-warning"
                                                     href="{{ url('/admin/question/show/' . $val->id) }}"
                                                     data-toggle="tooltip" title="Change Password">
                                                     Add Question <i class="ri-arrow-right-fill"></i></a>
                                                 </a>
-                                                @endif
                                             </td>
                                         </tr>
                                         @php $count++ @endphp
