@@ -210,6 +210,9 @@ Route::post('/referral/store', [AdminReferralController::class, 'store'])->name(
 // Route to show all referrals
 Route::get('/referrals', [AdminReferralController::class, 'index'])->name('referrals.index');
 
+// Route to show the referral creation form
+Route::get('/referral/{id}', [AdminReferralController::class, 'show'])->name('referral.show');
+
 // Route to handle the referral submission
 Route::post('/admin/referral/store', [AdminReferralController::class, 'store'])->name('referral.store');
 });

@@ -21,6 +21,7 @@
                                 <th>Phone</th>
                                 <th>Referral Code</th>
                                 <th>Created At</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,7 @@
                                     @endphp
                                     <td>{{ $referral->referral_code }} <a href="javascript:void(0)" onclick="copyToClipboard('{{ $refLink }}')"><i class="ri-file-copy-2-line"></a></td>
                                     <td>{{ $referral->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td><a href="{{ route('admin.referral.show', $referral->id) }}">View</td>
                                 </tr>
                             @endforeach
                         </tbody>

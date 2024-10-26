@@ -1,6 +1,15 @@
 @extends('layouts.frontend.layer')
 @section('title', 'Courses Purchase | Drive Safe')
 @section('content')
+
+@php
+    if (isset($_GET['ref'])) {
+        $GetRefId = $_GET['ref'];
+    }else {
+        $GetRefId = '';
+    }
+@endphp
+
     <link href="{{ asset('assets/student/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('assets/student/js/bootstrap-datepicker.js') }}"></script>
     <!-- breadcrumb start -->
@@ -24,6 +33,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 order-2 order-md-1">
+
                     <div class="control-group">
                         @if (!empty(Session::get('message')) && Session::get('message')['status'] == '0')
                             <div class="control-group">
@@ -33,13 +43,20 @@
                             </div>
                         @endif
                     </div>
-                    <h4 class="mb-3">Registration </h4>
+
+                    <h4 class="mb-3">Registration</h4>
+
                     <hr class="separator-aqua">
 
                     <form class="needs-validation" action="{{ route('student.course-payment-validation') }}"
                         id="checkoutForm" method="POST">
+
                         @csrf
+
                         <div class="row">
+
+                            <input type="hidden" id="ref_id" name="ref_id" value="{{ $GetRefId }}">
+
                             <div class="col-md-6">
                                 <label for="first_name" class="form-label mb-2">First Name</label>
                                 <input type="text" id="first_name" class="form-control mb-3"
@@ -49,6 +66,7 @@
                                     <strong>{{ $errors->first('first_name') }}</strong>
                                 @endif
                             </div>
+
                             <div class="col-md-6">
                                 <label for="mobile_no" class="form-label mb-2">Mobile Number</label>
                                 <input type="text" id="mobile_no" class="form-control mb-3"
@@ -58,6 +76,7 @@
                                     <strong>{{ $errors->first('mobile_no') }}</strong>
                                 @endif
                             </div>
+
                             {{-- <div class="col-md-4">
                                 <label for="middle_name" class="form-label mb-2">Middle name</label>
                                 <input type="text" id="middle_name" class="form-control mb-3"
@@ -66,6 +85,7 @@
                                     <strong>{{ $errors->first('middle_name') }}</strong>
                                 @endif
                             </div>
+
                             <div class="col-md-4">
                                 <label for="last_name" class="form-label mb-2">Last Name</label>
                                 <input type="text" id="last_name" class="form-control mb-3"
@@ -75,6 +95,7 @@
                                     <strong>{{ $errors->first('last_name') }}</strong>
                                 @endif
                             </div> --}}
+
                             <div class="col-md-6">
                                 <label for="student_email" class="form-label mb-2">Student Email</label>
                                 <input type="text" id="student_email" class="form-control"
@@ -187,7 +208,6 @@
                                     <strong>{{ $errors->first('postcode') }}</strong>
                                 @endif
                             </div> --}}
-
 
 							<div class="col-md-6">
                                 <label for="student_password" class="form-label mb-2">Student Password</label>
@@ -348,6 +368,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
                 <div class="col-md-4 mb-4 order-1 order-md-2 ">

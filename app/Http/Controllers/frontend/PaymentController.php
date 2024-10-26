@@ -124,6 +124,7 @@ class PaymentController extends Controller
                 'gender' =>  Auth::user() != "" ? Auth::user()->gender : $request->gender,
                 'parent_email' => Auth::user() != "" ? Auth::user()->parent_email : $request->parent_email,
 				'security_questions' => $request->question,
+                'ref_id' => $request->ref_id
             ]);
             return redirect('student/course-checkout');
         } catch (\Exception $e) {
@@ -186,6 +187,7 @@ class PaymentController extends Controller
                 'expires_at' => date('Y-m-d H:i:s', strtotime("+250 days")),
                 'is_question_verify' => '1',
                 'question_expires_at' => date('Y-m-d H:i:s', strtotime("+6 hours")),
+                'ref_id' => $getCourse['ref_id']
             ];
             $user_insert = User::create($arr);
             $student_id = $user_insert->id;
