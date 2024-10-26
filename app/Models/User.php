@@ -42,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
         'updated_at',
         'expires_at',
 		'question_expires_at',
+        'ref_id'
     ];
 
     /**

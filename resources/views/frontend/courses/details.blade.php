@@ -2,6 +2,15 @@
 @section('title', 'Courses Details | Drive Safe')
 @section('content')
     @php $common_setting = getSettings() @endphp
+
+    @php
+        if (isset($_GET['ref'])) {
+            $GetRefId = $_GET['ref'];
+        }else {
+            $GetRefId = '';
+        }
+
+    @endphp
     <!-- breadcrumb start -->
     <div class="breadcrumb-area" style="background-image:url('{{ asset('assets/frontend/img/other/3.png') }}')">
         <div class="container">
@@ -59,7 +68,7 @@
                                         <a href="{{ url('student/course-lists') }}"
                                             class="btn btn-base btn-11 btn-11 w-100">Course Open</a>
                                     @else
-                                        <a href="{{ url('courses/purchase') }}" class="btn btn-base btn-11 btn-11 w-100">Get
+                                        <a href="{{ url('courses/purchase') }}?" class="btn btn-base btn-11 btn-11 w-100">Get
                                             Started</a>
                                     @endif
                                 </div>
@@ -71,14 +80,13 @@
                                     @if ($getPurchaseStatus > 0)
                                         <a href="{{ url('student/course-lists') }}" class="btn btn-base btn-11">Course Open</a>
                                     @else
-                                        <a href="{{ url('courses/purchase') }}" class="btn btn-base btn-11">Get
+                                        <a href="{{ url('courses/purchase') }}?ref={{ $GetRefId }}" class="btn btn-base btn-11">Get
                                             Started</a>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                     
                 </div>
                 <!--<div class="col-lg-4">-->
                 <!--    <div class="td-sidebar">-->
