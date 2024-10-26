@@ -65,6 +65,20 @@
 
                         <div class="row mb-3">
                             <div class="col-lg-2 custom-text-align">
+                                <label for="middle_name" class="form-label">Middle name</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control"
+                                    value="{{ old('middle_name') ? old('middle_name') : $getUserInfo->middle_name }}"
+                                    name="middle_name" />
+                                @if ($errors->has('middle_name'))
+                                    <strong>{{ $errors->first('middle_name') }}</strong>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-2 custom-text-align">
                                 <label for="first_name" class="form-label">Last name</label>
                             </div>
                             <div class="col-lg-6">

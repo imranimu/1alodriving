@@ -69,7 +69,7 @@
 
                             <div class="col-md-6">
                                 <label for="mobile_no" class="form-label mb-2">Mobile Number</label>
-                                <input type="text" id="mobile_no" class="form-control mb-3"
+                                <input type="number" id="mobile_no" class="form-control mb-3"
                                     placeholder="Enter Mobile Number" name="mobile_no" value="{{ old('mobile_no') }}"
                                     required="">
                                 @if ($errors->has('mobile_no'))
@@ -125,7 +125,7 @@
                                 $no = old('is_differently_abled') == 'no' ? 'checked' : '';
                             @endphp
 
-                            {{-- <div class="col-md-12">
+                             <div class="col-md-12">
                                 <label for="is_differently_abled" class="form-label mb-2 mr-3">Are you 18 year old?</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="is_differently_abled"
@@ -142,7 +142,7 @@
                                 @endif
                             </div>
 
-                            <div class="col-md-6">
+                            {{--<div class="col-md-6">
                                 <label for="dob" class="form-label mb-2">Date of Birth</label>
                                 <input type="text" name="dob" class="form-control postcode-separate mb-3"
                                     placeholder="YYYY-mm-day" value="{{ old('dob') }}"

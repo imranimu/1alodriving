@@ -95,16 +95,18 @@
 
                                             <td>{{ $val->created_at }}</td>
                                             <td>
-                                                <a class="badge bg-info"
-                                                    href="{{ url('admin/question/' . $val->id . '/edit') }}"
-                                                    data-toggle="tooltip" title="Edit">
-                                                    <i class="ri-edit-2-line"></i>
-                                                </a>
-                                                <a class="badge bg-danger" href="javascript:void(0)"
-                                                    onclick="questionDelete({{ $val->id }})" data-toggle="tooltip"
-                                                    title="Delete">
-                                                    <i class="ri-delete-bin-line"></i>
-                                                </a>
+                                                @if (Auth::User()->id != 57)
+                                                    <a class="badge bg-info"
+                                                        href="{{ url('admin/question/' . $val->id . '/edit') }}"
+                                                        data-toggle="tooltip" title="Edit">
+                                                        <i class="ri-edit-2-line"></i>
+                                                    </a>
+                                                    <a class="badge bg-danger" href="javascript:void(0)"
+                                                        onclick="questionDelete({{ $val->id }})" data-toggle="tooltip"
+                                                        title="Delete">
+                                                        <i class="ri-delete-bin-line"></i>
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @php $count++ @endphp

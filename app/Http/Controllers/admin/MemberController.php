@@ -71,6 +71,7 @@ class MemberController extends Controller
         try {
             $update = $user->fill([
                 'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'mobile_no' => $request->mobile_no,
@@ -151,6 +152,7 @@ class MemberController extends Controller
         try {
             $update = $user->fill([
                 'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'mobile_no' => $request->mobile_no,
@@ -192,6 +194,7 @@ class MemberController extends Controller
         try {
             $insert = User::create([
                 'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'mobile_no' => $request->mobile_no,
@@ -216,7 +219,7 @@ class MemberController extends Controller
 
         return redirect()->back();
     }
-	
+
 	public function question_destroy(Request $request)
     {
         $validator = Validator::make($request->all(), [
