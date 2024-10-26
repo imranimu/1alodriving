@@ -64,7 +64,7 @@
                                     @forelse($records as $val)
                                         <tr>
                                             <td>{{ $count }}</td>
-                                            <td>{{ $val->first_name }} {{ $val->last_name }}</td>
+                                            <td>{{ $val->first_name }} {{ $val->middle_name }} {{ $val->last_name }}</td>
                                             <td>{{ $val->email }}</td>
                                             <td>{{ $val->mobile_no }}</td>
                                             @if (File::exists('storage/image/student/thumbnail/' . $val->image))
