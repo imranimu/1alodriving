@@ -19,22 +19,28 @@ class AdminReferralController extends Controller
 
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $referral = Referral::findOrFail($id);
 
         $refCode = $referral->referral_code;
 
         // get current month
-        $currentMonth = Carbon::now()->month;
+        // $currentMonth = Carbon::now()->month;
         // get year
-        $year = Carbon::now()->year;
+        // $year = Carbon::now()->year;
 
-        $month = '2024-07'; // Example month filter
+        // $month = '2024-07'; // Example month filter
+
+        // Get month and year from request or use current month and year as default
+
+        $month = $request->input('month', Carbon::now()->month);
+
+        $year = $request->input('year', Carbon::now()->year);
 
         $users = User::where('ref_id', $refCode)
-                    ->whereYear('created_at', Carbon::now()->year)
-                    ->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', $year)
+                    ->whereMonth('created_at', $month)
                     ->get();
 
         $totalUserCount = $users->count();

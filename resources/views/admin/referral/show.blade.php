@@ -46,6 +46,42 @@
                                 <p>{{ $referral->created_at->format('d-m-Y H:i:s') }}</p>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <form action="{{ url('admin/referral', $referral->id) }}" method="GET" class="form-inline">
+                                <div class="row">
+
+                                    <div class="form-group mr-3 col-md-4">
+                                        <label for="month" class="mr-2">Month</label>
+                                        <select name="month" id="month" class="form-control form-control-sm">
+                                            <option value="">All Months</option>
+                                            @foreach(range(1, 12) as $m)
+                                            <option value="{{ $m }}" {{ (int) request('month', date('n')) === $m ? 'selected' : '' }}>
+                                                    {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mr-3 col-md-4">
+                                        <label for="year" class="mr-2">Year</label>
+                                        <select name="year" id="year" class="form-control form-control-sm">
+                                            <option value="">All Years</option>
+                                            @foreach(range(date('Y') - 5, date('Y')) as $y)
+                                                <option value="{{ $y }}" {{ (int) request('year', date('Y')) === $y ? 'selected' : '' }}>
+                                                    {{ $y }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="" class="mr-2 d-block"> &nbsp; </label>
+                                        <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
