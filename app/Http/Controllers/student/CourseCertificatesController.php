@@ -41,7 +41,7 @@ class CourseCertificatesController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $getCertificateInfo = CourseCertificate::where(['id' => $id, 'status' => '1', 'created_by' => Auth::user()->id])->with('get_license')->first(); 
+        $getCertificateInfo = CourseCertificate::where(['id' => $id, 'status' => '1', 'created_by' => Auth::user()->id])->with('get_license')->first();
         if (Auth::user()->first_name =='' || Auth::user()->dob =='' ||  Auth::user()->gender =='') {
             Session::put('getCertificateErrorMessage', [
                 'status' => 0,
@@ -191,9 +191,9 @@ class CourseCertificatesController extends Controller
             // $road_signs_text = "x";
             // $fpdi->Text($road_signs_left, $road_signs_top, $road_signs_text);
         } */
-        
+
         $getUser = Auth::user();
-        
+
         for ($i = 1; $i <= $count; $i++) {
 
             $template = $fpdi->importPage($i);
@@ -227,6 +227,18 @@ class CourseCertificatesController extends Controller
             $first_text = $getUser->first_name != "" ? $getUser->first_name : '';
             $fpdi->Text($first_left, $first_top, $first_text);
 
+            if ($getUser->middle_name != "") {
+                $middleName = strtoupper($getUser->middle_name[0]); // Capitalize the first word
+            } else {
+                $middleName = "";
+            }
+
+            $fpdi->SetFont("helvetica", "", 10);
+            $first_left = 120;
+            $first_top = 95;
+            $first_text = $middleName;
+            $fpdi->Text($first_left, $first_top, $first_text);
+
             $fpdi->SetFont("helvetica", "", 10);
             $dob_month_left = 149.5;
             $dob_month_top = 95.4;
@@ -247,7 +259,7 @@ class CourseCertificatesController extends Controller
 
             if ($getUser->gender == 'male') {
                 $fpdi->SetFont("helvetica", "", 12);
-                $male_left = 174.2;
+                $male_left = 175.5;
                 $male_top = 95.6;
                 $male_text = "x";
                 $fpdi->Text($male_left, $male_top, $male_text);
@@ -255,7 +267,7 @@ class CourseCertificatesController extends Controller
 
             if ($getUser->gender == 'female') {
                 $fpdi->SetFont("helvetica", "", 12);
-                $female_left = 189.5;
+                $female_left = 190.2;
                 $female_top = 95.6;
                 $female_text = "x";
                 $fpdi->Text($female_left, $female_top, $female_text);
@@ -268,11 +280,11 @@ class CourseCertificatesController extends Controller
             $license_text = !blank($getCertificateInfo->get_license) != "" ? $getCertificateInfo->get_license->license : '';
             $fpdi->Text($license_left, $license_top, $license_text);
 
-            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetFont("helvetica", '' , 9);
             $fpdi->SetTextColor(0,0,0);
             $date_issued_left = 162;
-            $date_issued_top = 124.8;
-            $date_issued_text = $getCertificateInfo->created_at != "" ? date('d/m/Y', strtotime($getCertificateInfo->created_at)) : '';
+            $date_issued_top = 126.9;
+            $date_issued_text = $getCertificateInfo->created_at != "" ? date('m  d  Y', strtotime($getCertificateInfo->created_at)) : '';
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             //bottom section
@@ -441,7 +453,7 @@ class CourseCertificatesController extends Controller
 
         return $fpdi->Output($outputFilePath, 'F');
     }
-	
+
 	public function report(Request $request)
     {
         $sql = CoursePurchase::selectRaw('course_purchases.id, course_purchases.student_id, course_purchases.course_id, course_purchases.total_amount, course_purchases.grand_amount, course_purchases.transaction_id, course_purchases.payment_status, course_purchases.total_module, course_purchases.status, course_purchases.stripe_response, course_purchases.created_at, courses.title, courses.image, courses_modules.id as module_id')->where(['course_purchases.student_id' => Auth::user()->id, 'course_purchases.payment_status' => '1', 'course_purchases.status' => '1'])
