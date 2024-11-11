@@ -40,7 +40,7 @@ class CertificatesController extends Controller
      */
     public function index(Request $request, $id, $student_id)
     {
-        $getCertificateInfo = CourseCertificate::where(['id' => $id, 'status' => '1', 'created_by' => $student_id])->with('get_license')->first(); 
+        $getCertificateInfo = CourseCertificate::where(['id' => $id, 'status' => '1', 'created_by' => $student_id])->with('get_license')->first();
 		$getUser = User::where(['id' => $student_id, 'status' => '1'])->first();
         if ($getUser->first_name =='' || $getUser->dob =='' || $getUser->gender =='') {
             Session::put('getCertificateErrorMessage', [
@@ -59,11 +59,11 @@ class CertificatesController extends Controller
             ]);
             return redirect('admin/certificate');
         }
-		
+
 		$outputFilePath = '';
         if ($getCertificateInfo->is_type == 'C1' && $getCertificateInfo->student_id == $student_id) {
 			$fileName = "Certificate-".$getCertificateInfo->is_type.".pdf";
-            $filePath = public_path("cc1.pdf");
+            $filePath = public_path("cc1-school.pdf");
             $outputFilePath = public_path($fileName);
             $this->fillPDFFile($filePath, $outputFilePath, $getCertificateInfo, $getUser);
         } elseif ($getCertificateInfo->is_type == 'C2' && $getCertificateInfo->student_id == $student_id) {
@@ -108,7 +108,7 @@ class CertificatesController extends Controller
             // $fpdi->Text($transfer_left, $transfer_top, $transfer_text);
 
             $fpdi->SetFont("helvetica", "", 10);
-            $lastname_left = 20;
+            $lastname_left = 17;
             $lastname_top = 95;
             $lastname_text = $getUser->last_name != "" ? $getUser->last_name : '';
             $fpdi->Text($lastname_left, $lastname_top, $lastname_text);
@@ -117,6 +117,18 @@ class CertificatesController extends Controller
             $first_left = 70;
             $first_top = 95;
             $first_text = $getUser->first_name != "" ? $getUser->first_name : '';
+            $fpdi->Text($first_left, $first_top, $first_text);
+
+            if ($getUser->middle_name != "") {
+                $middleName = strtoupper($getUser->middle_name[0]); // Capitalize the first word
+            } else {
+                $middleName = "";
+            }
+
+            $fpdi->SetFont("helvetica", "", 10);
+            $first_left = 120;
+            $first_top = 95;
+            $first_text = $middleName;
             $fpdi->Text($first_left, $first_top, $first_text);
 
             $fpdi->SetFont("helvetica", "", 10);
@@ -139,7 +151,7 @@ class CertificatesController extends Controller
 
             if ($getUser->gender == 'male') {
                 $fpdi->SetFont("helvetica", "", 12);
-                $male_left = 174.2;
+                $male_left = 175.5;
                 $male_top = 95.6;
                 $male_text = "x";
                 $fpdi->Text($male_left, $male_top, $male_text);
@@ -147,7 +159,7 @@ class CertificatesController extends Controller
 
             if ($getUser->gender == 'female') {
                 $fpdi->SetFont("helvetica", "", 12);
-                $female_left = 189.5;
+                $female_left = 190.2;
                 $female_top = 95.6;
                 $female_text = "x";
                 $fpdi->Text($female_left, $female_top, $female_text);
@@ -160,11 +172,11 @@ class CertificatesController extends Controller
             $license_text = !blank($getCertificateInfo->get_license) != "" ? $getCertificateInfo->get_license->license : '';
             $fpdi->Text($license_left, $license_top, $license_text);
 
-            $fpdi->SetFont("helvetica", "", 12);
+            $fpdi->SetFont("helvetica", '' , 9);
             $fpdi->SetTextColor(0,0,0);
             $date_issued_left = 162;
-            $date_issued_top = 124.8;
-            $date_issued_text = $getCertificateInfo->created_at != "" ? date('d/m/Y', strtotime($getCertificateInfo->created_at)) : '';
+            $date_issued_top = 126.9;
+            $date_issued_text = $getCertificateInfo->created_at != "" ? date('m  d  Y', strtotime($getCertificateInfo->created_at)) : '';
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             //bottom section
@@ -333,5 +345,5 @@ class CertificatesController extends Controller
 
         return $fpdi->Output($outputFilePath, 'F');
     }
-	
+
 }
