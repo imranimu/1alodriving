@@ -164,31 +164,31 @@ class ProfileController extends Controller
 
         $search = $request->q;
 
-        $sql = CoursePurchase::selectRaw('course_purchases.id, course_purchases.student_id, course_purchases.course_id, course_purchases.total_amount, course_purchases.grand_amount, course_purchases.transaction_id, course_purchases.payment_status, course_purchases.total_module, course_purchases.status, course_purchases.stripe_response, course_purchases.created_at, courses.title, courses.image, courses_modules.id as module_id')->where(['course_purchases.payment_status' => '1', 'course_purchases.status' => '1'])
-            ->whereRaw('stripe_response !=""')
-            ->leftjoin('courses', function ($q) {
-                $q->on('course_purchases.course_id', 'courses.id');
-            })
-            ->leftjoin('courses_modules', function ($q) {
-                $q->on('courses.id', 'courses_modules.courses_id');
-            })
+        $sql = CoursePurchase::selectRaw('course_purchases.id, course_purchases.student_id, course_purchases.course_id, course_purchases.total_amount, course_purchases.grand_amount, course_purchases.transaction_id, course_purchases.payment_status, course_purchases.total_module, course_purchases.status, course_purchases.stripe_response, course_purchases.created_at, courses.title, courses.image, courses_modules.id as module_id, users.first_name, users.last_name, users.email')
+            ->where(['course_purchases.payment_status' => '1', 'course_purchases.status' => '1'])
+            ->whereRaw('stripe_response != ""')
+            ->leftJoin('courses', 'course_purchases.course_id', '=', 'courses.id')
+            ->leftJoin('courses_modules', 'courses.id', '=', 'courses_modules.courses_id')
+            ->leftJoin('users', 'course_purchases.student_id', '=', 'users.id') // Join users table
             ->with('get_user')
-            ->GroupBy('course_purchases.student_id');
+            ->groupBy('course_purchases.student_id');
 
-        // if (!empty($search)) {
-        //     $sql->where(function ($query) use ($search) {
-        //         $query->where('users.name', 'LIKE', '%' . $search . '%')
-        //             ->orWhere('users.email', 'LIKE', '%' . $search . '%');
-        //     });
-        // }
+        if (!empty($search)) {
+            $sql->where(function ($query) use ($search) {
+                $query->where('users.first_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.last_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.email', 'LIKE', '%' . $search . '%');
+            });
+        }
 
         $lists = 1;
         $perPage = 10;
         $records = $sql->paginate($perPage);
-		//return $records;
-        $serial = (!empty($input['page'])) ? (($perPage * ($input['page'] - 1)) + 1) : 1;
+        //return $records;
+        $serial = (!empty($request->page)) ? (($perPage * ($request->page - 1)) + 1) : 1;
         return view('admin.report.index', compact('lists', 'serial', 'records'));
     }
+
 
 
     public function report_download($course_id, $student_id)

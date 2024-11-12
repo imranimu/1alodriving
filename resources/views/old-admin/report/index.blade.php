@@ -21,7 +21,7 @@
     <div class="page-content">
         <div class="page-header position-relative clearfix">
             <div class="span10 header-title">
-                <h1>Student Report##</h1>
+                <h1>Student Report</h1>
             </div>
         </div>
         <!--/.page-header-->
