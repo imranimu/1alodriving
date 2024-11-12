@@ -239,6 +239,27 @@ class CourseCertificatesController extends Controller
             $first_text = $middleName;
             $fpdi->Text($first_left, $first_top, $first_text);
 
+            $fpdi->SetFont("helvetica", '' , 9);
+            $fpdi->SetTextColor(0,0,0);
+            $date_issued_left = 170;
+            $date_issued_top = 58.2;
+            $date_issued_text = $getCertificateInfo->created_at != "" ? date('m', strtotime($getCertificateInfo->created_at)) : '';
+            $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
+
+            $fpdi->SetFont("helvetica", '' , 9);
+            $fpdi->SetTextColor(0,0,0);
+            $date_issued_left = 180;
+            $date_issued_top = 58.2;
+            $date_issued_text = $getCertificateInfo->created_at != "" ? date('d', strtotime($getCertificateInfo->created_at)) : '';
+            $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
+
+            $fpdi->SetFont("helvetica", '' , 9);
+            $fpdi->SetTextColor(0,0,0);
+            $date_issued_left = 188.2;
+            $date_issued_top = 58.2;
+            $date_issued_text = $getCertificateInfo->created_at != "" ? date('Y', strtotime($getCertificateInfo->created_at)) : '';
+            $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
+
             $fpdi->SetFont("helvetica", "", 10);
             $dob_month_left = 149.5;
             $dob_month_top = 95.4;
@@ -257,6 +278,12 @@ class CourseCertificatesController extends Controller
             $dob_year_text = $getUser->dob != "" ? date('Y', strtotime($getUser->dob)) : 0;
             $fpdi->Text($dob_year_left, $dob_year_top, $dob_year_text);
 
+            $fpdi->SetFont("helvetica", "B", 11);
+            $first_left = 107.5;
+            $first_top = 68.5;
+            $first_text = "P";
+            $fpdi->Text($first_left, $first_top, $first_text);
+
             if ($getUser->gender == 'male') {
                 $fpdi->SetFont("helvetica", "", 12);
                 $male_left = 175.5;
@@ -268,7 +295,7 @@ class CourseCertificatesController extends Controller
             if ($getUser->gender == 'female') {
                 $fpdi->SetFont("helvetica", "", 12);
                 $female_left = 190.2;
-                $female_top = 95.6;
+                $female_top = 95.8;
                 $female_text = "x";
                 $fpdi->Text($female_left, $female_top, $female_text);
             }
