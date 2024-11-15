@@ -261,25 +261,31 @@ class CourseCertificatesController extends Controller
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             $fpdi->SetFont("helvetica", "", 10);
-            $dob_month_left = 149.5;
-            $dob_month_top = 95.4;
+            $dob_month_left = 150.5;
+            $dob_month_top = 96;
             $dob_month_text = $getUser->dob != "" ? date('m', strtotime($getUser->dob)) : 0;
             $fpdi->Text($dob_month_left, $dob_month_top, $dob_month_text);
 
             $fpdi->SetFont("helvetica", "", 10);
-            $dob_day_left = 158;
-            $dob_day_top = 95.4;
+            $dob_day_left = 158.5;
+            $dob_day_top = 96;
             $dob_day_text = $getUser->dob != "" ? date('d', strtotime($getUser->dob)) : 0;
             $fpdi->Text($dob_day_left, $dob_day_top, $dob_day_text);
 
             $fpdi->SetFont("helvetica", "", 10);
-            $dob_year_left = 165;
-            $dob_year_top = 95.4;
+            $dob_year_left = 165.2;
+            $dob_year_top = 96;
             $dob_year_text = $getUser->dob != "" ? date('Y', strtotime($getUser->dob)) : 0;
             $fpdi->Text($dob_year_left, $dob_year_top, $dob_year_text);
 
             $fpdi->SetFont("helvetica", "B", 11);
-            $first_left = 107.5;
+            $first_left = 137;
+            $first_top = 68.5;
+            $first_text = "P";
+            $fpdi->Text($first_left, $first_top, $first_text);
+
+            $fpdi->SetFont("helvetica", "B", 11);
+            $first_left = 174;
             $first_top = 68.5;
             $first_text = "P";
             $fpdi->Text($first_left, $first_top, $first_text);
@@ -287,22 +293,22 @@ class CourseCertificatesController extends Controller
             if ($getUser->gender == 'male') {
                 $fpdi->SetFont("helvetica", "", 12);
                 $male_left = 175.5;
-                $male_top = 95.6;
+                $male_top = 95.9;
                 $male_text = "x";
                 $fpdi->Text($male_left, $male_top, $male_text);
             }
 
             if ($getUser->gender == 'female') {
                 $fpdi->SetFont("helvetica", "", 12);
-                $female_left = 190.2;
-                $female_top = 95.8;
+                $female_left = 190.1;
+                $female_top = 95.9;
                 $female_text = "x";
                 $fpdi->Text($female_left, $female_top, $female_text);
             }
 
             $fpdi->SetFont("helvetica", 'B', 14);
             $fpdi->SetTextColor(255,0,0);
-            $license_left = 179;
+            $license_left = 170;
             $license_top = 32;
             $license_text = !blank($getCertificateInfo->get_license) != "" ? $getCertificateInfo->get_license->license : '';
             $fpdi->Text($license_left, $license_top, $license_text);
