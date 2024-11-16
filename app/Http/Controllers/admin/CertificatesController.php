@@ -135,21 +135,21 @@ class CertificatesController extends Controller
             $fpdi->SetTextColor(0,0,0);
             $date_issued_left = 170;
             $date_issued_top = 58.2;
-            $date_issued_text = $getCertificateInfo->created_at != "" ? date('m', strtotime($getCertificateInfo->created_at)) : '';
+            $date_issued_text = $getUser->created_at != "" ? date('m', strtotime($getUser->created_at)) : '';
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             $fpdi->SetFont("helvetica", '' , 9);
             $fpdi->SetTextColor(0,0,0);
             $date_issued_left = 180;
             $date_issued_top = 58.2;
-            $date_issued_text = $getCertificateInfo->created_at != "" ? date('d', strtotime($getCertificateInfo->created_at)) : '';
+            $date_issued_text = $getUser->created_at != "" ? date('d', strtotime($getUser->created_at)) : '';
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             $fpdi->SetFont("helvetica", '' , 9);
             $fpdi->SetTextColor(0,0,0);
             $date_issued_left = 188.2;
             $date_issued_top = 58.2;
-            $date_issued_text = $getCertificateInfo->created_at != "" ? date('Y', strtotime($getCertificateInfo->created_at)) : '';
+            $date_issued_text = $getUser->created_at != "" ? date('Y', strtotime($getUser->created_at)) : '';
             $fpdi->Text($date_issued_left, $date_issued_top, $date_issued_text);
 
             $fpdi->SetFont("helvetica", "", 10);
@@ -198,10 +198,10 @@ class CertificatesController extends Controller
                 $fpdi->Text($female_left, $female_top, $female_text);
             }
 
-            $fpdi->SetFont("helvetica", 'B', 14);
+            $fpdi->SetFont("helvetica", 'B', 12);
             $fpdi->SetTextColor(255,0,0);
-            $license_left = 170;
-            $license_top = 32;
+            $license_left = 175;
+            $license_top = 31;
             $license_text = !blank($getCertificateInfo->get_license) != "" ? $getCertificateInfo->get_license->license : '';
             $fpdi->Text($license_left, $license_top, $license_text);
 
