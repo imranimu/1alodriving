@@ -395,6 +395,10 @@
                             </div>
                         </li>
                     </ul>
+
+                    <div class="alert alert-primary" role="alert">
+                        All subscription purchases are final and non-refundable.
+                    </div>
                 </div>
             </div>
         </div>
