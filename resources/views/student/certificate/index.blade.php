@@ -21,31 +21,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                    // echo "<prev>";
-                                    // print_r($records);
-                                    // echo "</prev>";
-                                ?>
-                                
                                 @if (!blank($records))
                                     @php $count = 1; @endphp
                                     @foreach ($records as $val)
-                                        <tr class="text-left">
-                                            <td>{{ $count }}</td>
-                                            <td>{{ getCourseName($val->course_id) }}</td>
-                                            <!--td>
-                                                @if ($val->is_type == 'C1')
-                                                    <label class="badge badge-info">Certificate first part</label>
-                                                @elseif ($val->is_type == 'C2')
-                                                    <label class="badge badge-info">Certificate second part</label>
-                                                @else
-                                                    -
-                                                @endif
-                                            </td-->
-                                            <td><a href="{{ url('student/get-certificate/' . $val->id . '/download') }}"
-                                                    class="badge badge-primary">Download</a></td>
-                                            <td>{{ date('d-m-Y', strtotime($val->created_at)) }}</td>
-                                        </tr>
+                                        @php
+                                            $result = getStudentExamStatus($val->course_id, Auth::user()->id);
+                                        @endphp
+
+                                        @if ($result == 8)
+                                            <tr class="text-left">
+                                                <td>{{ $count }}</td>
+                                                <td>{{ getCourseName($val->course_id) }}</td>
+                                                <!--td>
+                                                    @if ($val->is_type == 'C1')
+                                                        <label class="badge badge-info">Certificate first part</label>
+                                                    @elseif ($val->is_type == 'C2')
+                                                        <label class="badge badge-info">Certificate second part</label>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td-->
+                                                <td><a href="{{ url('student/get-certificate/' . $val->id . '/download') }}"
+                                                        class="badge badge-primary">Download</a></td>
+                                                <td>{{ date('d-m-Y', strtotime($val->created_at)) }}</td>
+                                            </tr>
+                                        @else
+                                            <tr class="text-left">
+                                                <td colspan="5">No Certificate Found!</td>
+                                            </tr>
+                                        @endif
+
                                         @php $count++; @endphp
                                     @endforeach
                                 @else

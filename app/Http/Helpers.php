@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use App\Models\admin\StudentExam;
+use App\Models\admin\CoursesModule;
 
 if (!function_exists('getSettings')) {
     function getSettings()
@@ -825,5 +826,26 @@ if(!function_exists('getStudentExams')){
         return $records;
 
         //return view('student.question.exam_lists', compact('lists', 'serial', 'records'));
+    }
+}
+
+if(!function_exists('getStudentExamStatus')){
+    function getStudentExamStatus($getCoursesId, $student_id){
+        $getCourseModuleCount = CoursesModule::where(['status' => '1', 'courses_id' => $getCoursesId])->orderBy('id', 'asc')->get();
+        $arr = [];
+        $allModuleArr = [];
+
+        if (!blank($getCourseModuleCount)) {
+            $count = 1;
+            foreach ($getCourseModuleCount  as $val) {
+                $arr[] = $val->id;
+                $allModuleArr[] = $val->id;
+                $count++;
+            }
+        }
+
+        $getResult = StudentExam::where(['status' => '1', 'exam_status' => '2', 'student_id' => $student_id])->whereIn('module_id', $arr)->where('exam_percentage', '>', 69)->count();
+
+        return $getResult;
     }
 }

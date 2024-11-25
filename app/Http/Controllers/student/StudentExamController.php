@@ -253,9 +253,9 @@ class StudentExamController extends Controller
         if (!blank($getCourseModuleCount)) {
             $count = 1;
             foreach ($getCourseModuleCount  as $val) {
-                if ($count <= 3) {
+                //if ($count <= 3) {
                     $arr[] = $val->id;
-                }
+                //}
                 $allModuleArr[] = $val->id;
                 $count++;
             }
@@ -263,7 +263,7 @@ class StudentExamController extends Controller
 
         if (!blank($arr)) {
             $getStudentExamThreeModuleCompletedCheck = StudentExam::where(['status' => '1', 'exam_status' => '2', 'student_id' => Auth::user()->id])->whereIn('module_id', $arr)->where('exam_percentage', '>', 69)->count();
-            //if ($getStudentExamThreeModuleCompletedCheck == 5) {
+            if ($getStudentExamThreeModuleCompletedCheck == 8) {
                 $certificateC1Exist = CourseCertificate::where(['student_id' => Auth::user()->id, 'course_id' => $getCoursesId->courses_id, 'is_type' => 'C1'])->exists();
                 if (!$certificateC1Exist) {
                     $getLicenseNumber = CourseLicense::where(['license_status' => '0', 'status' => '1'])->orderBy('id', 'asc')->first();
@@ -279,7 +279,7 @@ class StudentExamController extends Controller
                         $data->update(['license_status' => '1']);
                     }
                 }
-            //}
+            }
 
             $getStudentExamAllModuleCompletedCheck = StudentExam::where(['status' => '1', 'exam_status' => '2', 'student_id' => Auth::user()->id])->whereIn('module_id', $allModuleArr)->where('exam_percentage', '>', 69)->count();
             if ($getStudentExamAllModuleCompletedCheck == count($getCourseModuleCount)) {
