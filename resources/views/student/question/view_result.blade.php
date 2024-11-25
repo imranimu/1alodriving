@@ -14,64 +14,64 @@
 
 						<div class="row mb-3">
 							<div class="col-md-6 CourseAnsInfo">
-								<p> 
+								<p>
 									<!--<span><strong>Courses Name : </strong> {{ $getReuslt->title }}</span> |-->
-									<span>{{ $getReuslt->module_name }}</span> 
+									<span>{{ $getReuslt->module_name }}</span>
 								</p>
 								<p>
 								    @if ($getReuslt->question_percentage >= 70)
-								        <span style="color: #599A26; font-size: 20px; font-weight: bold;">Pass</span> 
-								    @else 
+								        <span style="color: #599A26; font-size: 20px; font-weight: bold;">Pass</span>
+								    @else
 								        <span style="color: #E9361F; font-size: 20px; font-weight: bold;">Fail</span>
 								    @endif
 								</p>
 								<p>
 								    <span><strong>Total : </strong> {{ $getReuslt->total_question }}</span> |
 									<span><strong>Correst ans : </strong> {{ $getReuslt->yes_ans }}</span> |
-									<span><strong>Wrong ans : </strong> {{ $getReuslt->no_ans }}</span>  
+									<span><strong>Wrong ans : </strong> {{ $getReuslt->no_ans }}</span>
 								</p>
 								<p><span><strong>Your Score : </strong> {{ $getReuslt->question_percentage }}%</span> |</p>
 								<p><span><strong>Pass Mark : </strong> 70% out of 100%</span></p>
 								<p></p>
 
                                 @if ($exam_status == '0')
-                                
+
                                     @php
-                                    
-                                        $ReviewLession = getReviewLesson($getReuslt->course_id,  $getReuslt->module_id); 
-                                        
+
+                                        $ReviewLession = getReviewLesson($getReuslt->course_id,  $getReuslt->module_id);
+
                                     @endphp
-                                    
-                                    <p class="alert alert-warning mt-3"> <i class="fa fa-exclamation-triangle"></i> Please check the review pages of this module. <a class="badge bg-info text-white" href="{{ url('student/course/' . $ReviewLession->course_id . '/' . $ReviewLession->module_id . '/' . $ReviewLession->id . '/2') }}">Click here</a></p> 
-                                @endif 
+
+                                    <p class="alert alert-warning mt-3"> <i class="fa fa-exclamation-triangle"></i> Please check the review pages of this module. <a class="badge bg-info text-white" href="{{ url('student/course/' . $ReviewLession->course_id . '/' . $ReviewLession->module_id . '/' . $ReviewLession->id . '/2') }}">Click here</a></p>
+                                @endif
 							</div>
 							@if ($getReuslt->question_percentage <= 69)
-							     
+
 								<div class="col-md-6 text-right">
 									<a class="btn btn-base" href="{{ url('/student/join-exam/'.$id) }}">Retake</a>
-									
+
 									<!--@if ($exam_status == '0')-->
                                         <!--  <a class="btn btn-warning" href="https://1aalodrivingschool.com/student/course/9/65/1901/2">Review</a>-->
                                     <!-- @endif-->
 								</div>
 							@endif
 							@if ($getReuslt->question_percentage >= 70)
-    							@php 
-    						        $nextModuleID  = getNextModule($getReuslt->course_id,  $getReuslt->module_id);  
-    						    @endphp 
-    						    
+    							@php
+    						        $nextModuleID  = getNextModule($getReuslt->course_id,  $getReuslt->module_id);
+    						    @endphp
+
     						    @if($nextModuleID == 'All Completed')
-        						    <div class="col-md-6 text-right"> 
+        						    <div class="col-md-6 text-right">
         						        <p class="badge badge-success" >All Completed</p>
     						        </div>
     						    @else
-    						        <div class="col-md-6 text-right"> 
+    						        <div class="col-md-6 text-right">
         								<a href="{{ url('student/course/' . $nextModuleID['course_id'] . '/' . $nextModuleID['module_id'] . '/' . $nextModuleID['lesson_id'] . '/1') }}"
-                                        class="btn btn-info btn-sm">Next Module <i class="fa fa-arrow-right"></i></a> 
+                                        class="btn btn-info btn-sm">Next Module <i class="fa fa-arrow-right"></i></a>
         							</div>
     						    @endif
-    						    
-    						   
+
+
 							@endif
 						</div>
 						<hr>
