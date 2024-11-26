@@ -41,7 +41,7 @@
                                                         -
                                                     @endif
                                                 </td-->
-                                                <td><a href="{{ url('student/get-certificate/' . $val->id . '/download') }}"
+                                                <td><a target="_blank" href="{{ url('student/get-certificate/' . $val->id . '/download') }}"
                                                         class="badge badge-primary">Download</a></td>
                                                 <td>{{ date('d-m-Y', strtotime($val->created_at)) }}</td>
                                             </tr>

@@ -30,11 +30,17 @@
                     <div class="contact-details myaccount-contact">
                         <h2><i class="fa fa-user"></i> Profile</h2>
 
-                        <a href="{{ url('student/modify-address')}}" class="btn btn-primary pull-right"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                        <p><strong>Name: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</strong></p>
-                        <p><strong>Email: {{ Auth::user()->email }}</strong></p>
-                        <p><strong>Mobile No: {{ Auth::user()->mobile_no}}</strong></p>
-                        <p><strong>Joined At: {{ date("d-M-Y h:i:s", strtotime(Auth::user()->created_at)) }}</strong></p>
+                        {{-- <a href="{{ url('student/modify-address')}}" class="btn btn-primary pull-right"><i class="fa fa-edit"></i>&nbsp;Edit</a> --}}
+                        <p><strong>Name</strong>: {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }} {{ Auth::user()->last_name }}</p>
+                        <p><strong>Email</strong>: {{ Auth::user()->email }}</p>
+                        <p><strong>Gender</strong>: {{ Auth::user()->gender }}</p>
+                        <p><strong>Date of Birth</strong>: {{ Auth::user()->dob ? \Carbon\Carbon::parse(Auth::user()->dob)->format('M-d-Y') : 'N/A' }}</p>
+                        <p><strong>Address</strong>: {{ Auth::user()->address1 }} </p>
+                        <p><strong>City</strong>: {{ Auth::user()->city_town }}</p>
+                        <p><strong>State</strong>: {{ Auth::user()->country }}</p>
+                        <p><strong>Zip Code</strong>: {{ Auth::user()->postcode }}</p>
+                        <p><strong>Mobile No</strong>: {{ Auth::user()->mobile_no}}</p>
+                        <p><strong>Joined At</strong>: {{ date("d-M-Y h:i:s", strtotime(Auth::user()->created_at)) }}</p>
 
                     </div>
 
@@ -49,6 +55,13 @@
     </div>
 
     <style>
+        .contact-details p{
+
+        }
+        .contact-details p strong{
+            min-width: 120px;
+            display: inline-block;
+        }
         @media (min-width: 1200px) .col-lg-3 {
             width: 25%;
         }

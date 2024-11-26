@@ -241,7 +241,7 @@ Route::group(['as' => 'student.', 'prefix' => 'student', 'namespace' => 'student
     Route::post('/update-password/{id}/update', [StudentProfileController::class, 'update_password']);
 
     //address modify
-    Route::get('/modify-address', [StudentProfileController::class, 'modify_address'])->name('modify-address');
+    //Route::get('/modify-address', [StudentProfileController::class, 'modify_address'])->name('modify-address');
     Route::post('/address/{id}/update', [StudentProfileController::class, 'update']);
 
 	//exam

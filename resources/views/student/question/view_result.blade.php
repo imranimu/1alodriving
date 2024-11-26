@@ -62,7 +62,9 @@
 
     						    @if($nextModuleID == 'All Completed')
         						    <div class="col-md-6 text-right">
-        						        <p class="badge badge-success" >All Completed</p>
+        						        <p class="badge badge-success" >All Completed</p> <br>
+
+                                        <a class="btn btn-warning rounded" href="{{ url('student/certificate') }}">Download Certificate</a>
     						        </div>
     						    @else
     						        <div class="col-md-6 text-right">
@@ -144,5 +146,8 @@
 		.resultLists li span:nth-child(3){
 
 		}
+        .btn.btn-warning.rounded{
+            border-radius: 50px !important;
+        }
     </style>
 @endsection
