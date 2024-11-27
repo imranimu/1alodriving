@@ -18,7 +18,7 @@ class MemberController extends Controller
         if (!empty($request->q)) {
             $sql->Where('first_name', 'LIKE', '%' . $request->q . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
-                ->orWhere('username', 'LIKE', '%' . $request->q . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
                 ->orWhere('email', 'LIKE', '%' . $request->q . '%');
         }
 
@@ -36,7 +36,7 @@ class MemberController extends Controller
         if (!empty($request->q)) {
             $sql->Where('first_name', 'LIKE', '%' . $request->q . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
-                ->orWhere('username', 'LIKE', '%' . $request->q . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
                 ->orWhere('email', 'LIKE', '%' . $request->q . '%');
         }
 
