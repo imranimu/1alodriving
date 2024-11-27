@@ -19,9 +19,10 @@ use PDF;
 class CertificatesController extends Controller
 {
 
-    public function show(Request $request)
+    /*public function show(Request $request)
     {
         $sql = CourseCertificate::where(['status' => '1'])->with('get_user')->orderBy('id', 'asc');
+
         if (!empty($request->q)) {
             $sql->Where('student_id', 'LIKE', '%' . $request->q . '%');
         }
@@ -31,6 +32,38 @@ class CertificatesController extends Controller
         $records = $sql->paginate($perPage);
         $serial = (!empty($input['page'])) ? (($perPage * ($input['page'] - 1)) + 1) : 1;
         return view('admin.certificate.index', compact('lists', 'serial', 'records'));
+    }*/
+
+    public function show(Request $request)
+    {
+        // Initialize the query
+        $sql = CourseCertificate::where(['status' => '1'])
+            ->with('get_user') // Ensure the relation is loaded
+            ->orderBy('id', 'asc');
+
+        // Add search conditions
+        if (!empty($request->q)) {
+            $searchTerm = '%' . $request->q . '%';
+
+            // Add search filters for student_id and user fields
+            $sql->where(function ($query) use ($searchTerm) {
+                $query->where('student_id', 'LIKE', $searchTerm) // Search by student_id
+                    ->orWhereHas('get_user', function ($query) use ($searchTerm) {
+                        $query->where('first_name', 'LIKE', $searchTerm)
+                                ->orWhere('last_name', 'LIKE', $searchTerm)
+                                ->orWhere('middle_name', 'LIKE', $searchTerm); // Search by user fields
+                    });
+            });
+        }
+
+        // Pagination
+        $perPage = 30;
+        $page = $request->input('page', 1);
+        $records = $sql->paginate($perPage);
+        $serial = ($page > 1) ? (($perPage * ($page - 1)) + 1) : 1;
+
+        // Return the view
+        return view('admin.certificate.index', compact('serial', 'records'));
     }
 
     /**
